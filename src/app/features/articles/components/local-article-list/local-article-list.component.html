@@ -1,0 +1,31 @@
+<section>
+  <list-navigator [sortList]="sortList" (sorted)="sort($event)">
+    <ng-container title>Articles</ng-container>
+  </list-navigator>
+  <main class="row g-2 mt-1">
+    <div class="col-12 col-md-4" *ngFor="let article of page">
+      <local-article [article]="article" (deleteArticle)="requestDeleteArticle($event)"></local-article>
+    </div>
+  </main>
+  <footer class="mt-3">
+    <div class="modal fade" id="confirm-delete-local-article" tabindex="-1" aria-labelledby="confirm-delete-local-article" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header py-1">
+            <h5 class="modal-title"><i class="bi bi-info-circle me-2"></i>Confirm delete</h5>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center text-muted">
+            <h4 class="text-truncate">{{articleToDelete?.title | titlecase}}</h4>
+            <small>This action is not reversible</small>
+          </div>
+          <div class="modal-footer py-1">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal" (click)="confirmDeleteArticle()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <list-paginator *ngIf="localArticles.length > articlesPerPage" [numberOfPages]="numberOfPages" (page)="updatePage($event)"></list-paginator>
+  </footer>
+</section>

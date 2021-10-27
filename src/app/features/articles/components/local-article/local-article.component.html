@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-header p-1 bg-dark">
+    <i class="bi bi-cloud-upload-fill text-muted upload-local-article-icon ms-1"></i>
+<!--    <i class="bi bi-cloud-upload-fill text-muted ms-1"></i>-->
+    <i class="bi bi-trash-fill text-muted float-end delete-local-article-icon me-2" (click)="delete()"></i>
+  </div>
+<!--  <i class="bi bi-file-earmark-text card-img-top bg-light" style="font-size: 2rem"></i>-->
+  <div class="card-body p-2">
+    <abbr [title]="article.title"><h6 *ngIf="article.title; else untitled" class="card-title text-truncate m-0" [routerLink]="['/editor', article.index]">{{article.title | titlecase}}</h6></abbr>
+    <ng-template #untitled><h5 class="card-title" [routerLink]="['/editor', article.index]" style="cursor: pointer">Untitled</h5></ng-template>
+    <small class="mb-0 text-muted">Updated: {{article.updated | date}}</small>
+  </div>
+</div>

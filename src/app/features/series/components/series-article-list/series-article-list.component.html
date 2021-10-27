@@ -1,0 +1,71 @@
+<div class="card">
+  <div class="card-header d-inline-flex">
+    <h5 class="card-title py-1 my-auto me-auto">Series Articles</h5>
+    <button type="button" class="btn btn-outline-primary btn-sm mx-1" (click)="addArticles()"><i class="bi bi-plus"></i>Add Article</button>
+  </div>
+  <ol class="list-group list-group-numbered" *ngIf="seriesArticles.length; else no_content">
+    <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Subheading</div>
+        Content for list item
+      </div>
+      <span class="badge bg-primary rounded-pill">14</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Subheading</div>
+        Content for list item
+      </div>
+      <span class="badge bg-primary rounded-pill">14</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Subheading</div>
+        Content for list item
+      </div>
+      <span class="badge bg-primary rounded-pill">14</span>
+    </li>
+  </ol>
+  <ng-template #no_content>
+    <div class="card-body" >
+      <h4 class="text-muted">Series has no articles</h4>
+    </div>
+  </ng-template>
+</div>
+
+<div class="modal fade" tabindex="-1" id="add-articles-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Available Articles</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <ul class="list-group modal-body">
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+          First checkbox
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+          Second checkbox
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+          Third checkbox
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+          Fourth checkbox
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+          Fifth checkbox
+        </li>
+      </ul>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+@import "~bootstrap";
+app-root > login {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+app-root {
+  padding-left: 200px;
+}
+

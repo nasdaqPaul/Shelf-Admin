@@ -1,0 +1,14 @@
+.card-title, .upload-local-article-icon, .delete-local-article-icon{
+  cursor: pointer;
+}
+.upload-local-article-icon, .delete-local-article-icon {
+  font-size: 1.2rem;
+}
+.delete-local-article-icon:hover {
+  color: #dc3545 !important;
+}
+abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
+}
