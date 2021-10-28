@@ -23,13 +23,13 @@ export class ArticleService {
     return this.articlesObservable.asObservable();
   }
 
-  getArticle(index: number) {
-    return this.db.articles.get(index)
+  getArticle(id: string) {
+    return this.db.articles.get(id)
   }
 
   saveArticle(article: Article, local = false) {
-    return new Promise<void>((resolve, reject) => {
-      if (article.index) {
+    return new Promise<void | string>((resolve, reject) => {
+      if (article.id) {
         this.db.articles.update(article, {returnAllArticles: true}).then((articles) => {
           for (const article of articles!) {
             delete article.content;
@@ -40,12 +40,13 @@ export class ArticleService {
           reject(err)
         })
       } else {
-        this.db.articles.create(article, {returnAllArticles: true}).then((articles) => {
-          for (const article of articles!) {
+        this.db.articles.create(article, {returnAllArticles: true}).then((results) => {
+          const {createdId} = results;
+          for (const article of results.allArticles!) {
             delete article.content;
           }
-          this.articlesObservable.next([...articles!])
-          resolve()
+          this.articlesObservable.next([...results.allArticles!])
+          resolve(results.createdId)
         }).catch(err => {
           reject(err)
         })
@@ -53,13 +54,13 @@ export class ArticleService {
     })
   }
 
-  deleteArticle(id: number | string) {
-    if (typeof id == "number") {
+  deleteArticle(id: string) {
+    // if (typeof id == "number") {
       // const localArticles: Article[] = this.localStorageService.deleteArticle(id);
       // localArticles.forEach((article) => {
       //   delete article.content;
       // })
       // this.localArticlesObservable.next([...localArticles]);
-    }
+    // }
   }
 }

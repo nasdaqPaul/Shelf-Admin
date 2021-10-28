@@ -11,7 +11,7 @@ export default class ArticleEditorResolver implements Resolve<Article | void> {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Article | void> {
-    const article = await this.articleService.getArticle(+route.params['id']);
+    const article = await this.articleService.getArticle(route.params['id']);
     if(!article){
       await this.route.navigate(['/'])
       return

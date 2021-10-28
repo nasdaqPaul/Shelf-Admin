@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {editorjsConfig} from "../../../../shared/editor.config";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ArticleService} from "../../services/article.service";
 import {Article} from "../../../../core/types";
 import EditorJS from "@editorjs/editorjs";
@@ -8,6 +8,7 @@ import {FormControl} from "@angular/forms";
 import NotificationService from "../../../../core/services/notification.service";
 import {Title} from "@angular/platform-browser";
 import {Modal, Toast, Tooltip} from "bootstrap";
+import {Location} from "@angular/common";
 
 const PAGE_TITLE = 'Shelf | Editor';
 
@@ -32,7 +33,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
   articleTitle!: FormControl;
   editorReady = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private articleService: ArticleService, private notificationService: NotificationService, private titleService: Title) {
+  constructor(private activatedRoute: ActivatedRoute, private articleService: ArticleService, private notificationService: NotificationService, private titleService: Title, private location: Location, private router: Router) {
     titleService.setTitle(PAGE_TITLE);
   }
 
@@ -50,7 +51,6 @@ export default class EditorComponent implements OnInit, OnDestroy {
       this.editor = new EditorJS({
         ...editorjsConfig,
         data: {
-          time: this.article.updated.getTime(),
           blocks: this.article.content,
         },
         onReady: () => {
@@ -98,7 +98,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
     //  on failure
     //    set editor status to not saving
     this.editor.save().then(data => {
-      if(!data.blocks.length && this.articleTitle.value.trim() === ''){
+      if (!data.blocks.length && this.articleTitle.value.trim() === '') {
         this.emptyEditorWarning.show();
         return;
       }
@@ -112,7 +112,13 @@ export default class EditorComponent implements OnInit, OnDestroy {
         updated: new Date(data.time!),
         content: data.blocks,
       }
-      this.articleService.saveArticle(newArticle).catch(err => {
+      this.articleService.saveArticle(newArticle).then((id: string | void) => {
+        if (id) {
+          this.article = {...newArticle, id: id};
+          // this.router.createUrlTree([this.location.path() + '/' + id])
+          this.router.navigate(['/editor', id]);
+        }
+      }).catch(err => {
         console.log(err);
       });
     })

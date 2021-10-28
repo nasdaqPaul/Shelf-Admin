@@ -1,10 +1,10 @@
 
 export interface SeriesArticle {
-  index: number,
+  id: string,
   source?: any
 }
 export interface Series {
-  index?: number;
+  id?: string;
   title: string;
   description: any;
   updated: Date;

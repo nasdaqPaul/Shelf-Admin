@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import ArticlesObjectStore from "./articles.object-store";
 import SeriesObjectStore from "./series.object-store";
 const DATABASE_NAME = 'shelf';
-const DATABASE_VERSION = 3;
+const DATABASE_VERSION = 1;
 
 function initializeDatabase() {
   return new Promise<IDBDatabase>(function (resolve, reject) {
@@ -17,14 +17,12 @@ function initializeDatabase() {
       const db: IDBDatabase = ev.target.result;
       if (!db.objectStoreNames.contains("articles")) {
         db.createObjectStore("articles", {
-          keyPath: "index",
-          autoIncrement: true
+          keyPath: "id",
         });
       }
       if (!db.objectStoreNames.contains("series")) {
         db.createObjectStore("series", {
-          keyPath: "index",
-          autoIncrement: true
+          keyPath: "id",
         });
       }
     }

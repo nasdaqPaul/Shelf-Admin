@@ -44,7 +44,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'series-editor/:index',
+    path: 'series-editor/:id',
     component: SeriesEditorComponent,
     resolve: {
       series: SeriesEditorResolver

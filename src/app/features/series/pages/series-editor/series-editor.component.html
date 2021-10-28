@@ -31,7 +31,7 @@
       </div>
     </section>
     <section class="col-4">
-      <series-article-list [seriesArticles]="series.articles"></series-article-list>
+      <series-article-list [seriesArticles]="seriesArticles" (addArticlesToSeries)="addArticlesToSeries($event)"></series-article-list>
     </section>
   </div>
 </main>

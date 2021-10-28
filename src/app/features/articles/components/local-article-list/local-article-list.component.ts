@@ -83,7 +83,7 @@ export default class LocalArticleListComponent implements OnInit, OnDestroy {
   }
 
   confirmDeleteArticle() {
-    this.articleService.deleteArticle(this.articleToDelete?.index!);
+    this.articleService.deleteArticle(this.articleToDelete?.id!);
     this.articleToDelete = null;
   }
 

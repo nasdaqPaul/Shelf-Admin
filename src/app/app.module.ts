@@ -26,6 +26,7 @@ import {BS_TOKEN} from "./core/services/bootsratp.service";
 import SeriesEditorComponent from "./features/series/pages/series-editor/series-editor.component";
 import DatabaseService from "./storage/local/db";
 import SeriesArticleListComponent from "./features/series/components/series-article-list/series-article-list.component";
+import ArticleIdToTitlePipe from "./features/articles/pipes/article-id-to-title.pipe";
 
 const bootstrap: any =(window as any)['bootstrap'];
 
@@ -50,7 +51,8 @@ const bootstrap: any =(window as any)['bootstrap'];
     AppFooterComponent,
     SeriesEditorComponent,
     AppNavbarComponent,
-    SeriesArticleListComponent
+    SeriesArticleListComponent,
+    ArticleIdToTitlePipe
   ],
   imports: [
     CommonModule,

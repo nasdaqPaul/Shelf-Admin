@@ -11,7 +11,7 @@ export default class SeriesEditorResolver implements Resolve<Series | void> {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Series | void> {
-    const series = await this.seriesService.getSeries(+route.params['index'])
+    const series = await this.seriesService.getSeries(route.params['id']);
     if (!series) {
 
     } else {

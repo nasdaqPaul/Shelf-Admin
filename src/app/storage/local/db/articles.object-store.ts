@@ -1,4 +1,5 @@
 import {Article} from "../../../core/types";
+import {v1} from 'uuid';
 
 export default class ArticlesObjectStore {
   public static NAME = 'articles';
@@ -9,23 +10,28 @@ export default class ArticlesObjectStore {
   }
 
   create(article: Article, options: any) {
-    return new Promise<void | Article[]>((resolve, reject) => {
+    return new Promise<{ createdId: string, allArticles?: Article[] }>((resolve, reject) => {
       const tx = this.db.transaction(ArticlesObjectStore.NAME, "readwrite");
       const objectStore = tx.objectStore(ArticlesObjectStore.NAME);
-      const writeRequest = objectStore.add(article)
+      const writeRequest = objectStore.add({...article, id: v1()});
       let readRequest: IDBRequest<any[]>;
 
       if (options.returnAllArticles) {
         readRequest = objectStore.getAll();
       }
 
+      writeRequest.onsuccess = function (e) {
+        console.log(e);
+      }
       tx.oncomplete = function (e) {
         if (options.returnAllArticles) {
           // @ts-ignore
-          resolve(readRequest.result)
+          resolve({allArticles: readRequest.result, createdId: writeRequest.result})
+          console.log(writeRequest.result)
         } else {
           //@ts-ignore
           resolve(writeRequest.result)
+          console.log({createId: writeRequest.result});
         }
       }
       tx.onerror = function (e) {
@@ -36,12 +42,12 @@ export default class ArticlesObjectStore {
 
   }
 
-  get(index: number) {
+  get(id: string) {
     return new Promise<Article | void>((resolve, reject) => {
       const tx = this.db.transaction(ArticlesObjectStore.NAME, 'readonly');
       const objectStore = tx.objectStore(ArticlesObjectStore.NAME);
 
-      const readReq = objectStore.get(index);
+      const readReq = objectStore.get(id);
 
       readReq.onerror = function (e) {
         // @ts-ignore
@@ -94,17 +100,16 @@ export default class ArticlesObjectStore {
         reject(e.target.error)
       }
 
-      if(options.returnAllArticles){
+      if (options.returnAllArticles) {
         readReq = objectStore.getAll();
         readReq.onerror = function (e) {
           // @ts-ignore
           reject(e.target.error);
         }
-        tx.oncomplete = function (e){
+        tx.oncomplete = function (e) {
           resolve(readReq.result);
         }
-      }
-      else {
+      } else {
         tx.oncomplete = function (e) {
           resolve();
         }

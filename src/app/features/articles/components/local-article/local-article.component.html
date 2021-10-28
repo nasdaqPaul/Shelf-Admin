@@ -6,8 +6,8 @@
   </div>
 <!--  <i class="bi bi-file-earmark-text card-img-top bg-light" style="font-size: 2rem"></i>-->
   <div class="card-body p-2">
-    <abbr [title]="article.title"><h6 *ngIf="article.title; else untitled" class="card-title text-truncate m-0" [routerLink]="['/editor', article.index]">{{article.title | titlecase}}</h6></abbr>
-    <ng-template #untitled><h5 class="card-title" [routerLink]="['/editor', article.index]" style="cursor: pointer">Untitled</h5></ng-template>
+    <abbr [title]="article.title"><h6 *ngIf="article.title; else untitled" class="card-title text-truncate m-0" [routerLink]="['/editor', article.id]">{{article.title | titlecase}}</h6></abbr>
+    <ng-template #untitled><h5 class="card-title" [routerLink]="['/editor', article.id]" style="cursor: pointer">Untitled</h5></ng-template>
     <small class="mb-0 text-muted">Updated: {{article.updated | date}}</small>
   </div>
 </div>

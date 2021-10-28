@@ -1,4 +1,5 @@
 import {Series} from "../../../features/series/types";
+import {v1} from "uuid";
 
 const STORE_NAME = 'series'
 
@@ -10,23 +11,23 @@ export default class SeriesObjectStore {
   }
 
   create(series: Series, options: any) {
-    return new Promise<void | Series[]>((resolve, reject) => {
+    return new Promise<{ createdId: string, allSeries?: Series[] }>((resolve, reject) => {
       const tx = this.db.transaction(STORE_NAME, "readwrite");
       const objectStore = tx.objectStore(STORE_NAME);
-      const writeRequest = objectStore.add(series)
-      let readRequest: IDBRequest<any[]>;
+      const createSeriesRequest = objectStore.add({...series, id: v1()});
+      let getAllSeriesRequest: IDBRequest<any[]>;
 
       if (options.returnAllSeries) {
-        readRequest = objectStore.getAll();
+        getAllSeriesRequest = objectStore.getAll();
       }
 
       tx.oncomplete = function (e) {
         if (options.returnAllSeries) {
           // @ts-ignore
-          resolve(readRequest.result)
+          resolve({createdId: createSeriesRequest.result, allSeries: getAllSeriesRequest.result})
         } else {
           //@ts-ignore
-          resolve(writeRequest.result)
+          resolve({createdId: createSeriesRequest.result})
         }
       }
       tx.onerror = function (e) {

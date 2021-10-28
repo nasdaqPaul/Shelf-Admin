@@ -1,33 +1,18 @@
 <div class="card">
   <div class="card-header d-inline-flex">
-    <h5 class="card-title py-1 my-auto me-auto">Series Articles</h5>
-    <button type="button" class="btn btn-outline-primary btn-sm mx-1" (click)="addArticles()"><i class="bi bi-plus"></i>Add Article</button>
+    <h5 class="card-title py-1 my-auto me-auto">Articles</h5>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="openAddArticleDialog()"><i class="bi bi-plus"></i>Add</button>
   </div>
-  <ol class="list-group list-group-numbered" *ngIf="seriesArticles.length; else no_content">
-    <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+  <ol class="list-group list-group-numbered list-body" *ngIf="seriesArticles?.length; else no_content">
+    <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let seriesArticle of seriesArticles">
       <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Content for list item
+        <div class="fw-bold text-primary">{{seriesArticle.id | toTitle: allArticles | titlecase}}</div>
       </div>
-      <span class="badge bg-primary rounded-pill">14</span>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Content for list item
-      </div>
-      <span class="badge bg-primary rounded-pill">14</span>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Content for list item
-      </div>
-      <span class="badge bg-primary rounded-pill">14</span>
+      <i class="bi bi-x-circle-fill text-muted"></i>
     </li>
   </ol>
   <ng-template #no_content>
-    <div class="card-body" >
+    <div class="card-body list-body" >
       <h4 class="text-muted">Series has no articles</h4>
     </div>
   </ng-template>
@@ -41,30 +26,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <ul class="list-group modal-body">
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-          First checkbox
-        </li>
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-          Second checkbox
-        </li>
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-          Third checkbox
-        </li>
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-          Fourth checkbox
-        </li>
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-          Fifth checkbox
+        <li class="list-group-item" *ngFor="let availableArticle of availableArticles">
+          <label>
+            <input class="form-check-input me-1" type="checkbox" value="" aria-label="..." (change)="setArticleTobeAdded($event, availableArticle)"> {{availableArticle.title | titlecase}}
+          </label>
         </li>
       </ul>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeAddArticleDialog()">Cancel</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="emitAddArticles()">Save</button>
       </div>
     </div>
   </div>

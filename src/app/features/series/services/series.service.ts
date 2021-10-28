@@ -24,24 +24,24 @@ export default class SeriesService {
   }
 
   saveSeries(series: Series) {
-    return new Promise<void>((resolve, reject) => {
-      if (series.index) {
+    return new Promise<void | string>((resolve, reject) => {
+      if (series.id) {
         this.db.series.update(series, {returnAllSeries: true}).then(series => {
-          for(const s of series!){
+          for (const s of series!) {
             delete s.description;
           }
-          this.seriesSubject.next(series!)
-          resolve()
+          this.seriesSubject.next(series!);
+          resolve();
         }).catch(err => {
-          reject(err)
+          reject(err);
         })
       } else {
-        this.db.series.create(series, {returnAllSeries: true}).then(series => {
-          for(const s of series!){
+        this.db.series.create(series, {returnAllSeries: true}).then(result => {
+          for (const s of result.allSeries!) {
             delete s.description;
           }
-          this.seriesSubject.next(series!)
-          resolve();
+          this.seriesSubject.next([...result.allSeries!])
+          resolve(result.createdId);
         }).catch(err => {
           reject(err);
         })
