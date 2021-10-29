@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Article} from "../../../../core/types";
+import {Article} from "../../types";
 
 @Component({
-  selector: 'local-article',
-  templateUrl: 'local-article.component.html',
-  styleUrls: ['local-article.component.css']
+  selector: 'article',
+  templateUrl: 'article.component.html',
+  styleUrls: ['article.component.css']
 })
-export default class LocalArticleComponent {
+export default class ArticleComponent {
   @Input() article!: Article
   @Output() deleteArticle = new EventEmitter<Article>()
 

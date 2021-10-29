@@ -8,10 +8,10 @@ import routes from "./app.routes";
 import AutosaveGuard from "./features/articles/guards/autosave.guard";
 import {CommonModule} from "@angular/common";
 import DashboardComponent from "./core/pages/dashboard/dashboard.component";
-import LocalArticleComponent from "./features/articles/components/local-article/local-article.component";
-import LocalArticleListComponent from "./features/articles/components/local-article-list/local-article-list.component";
+import ArticleComponent from "./features/articles/components/article/article.component";
+import ArticleListComponent from "./features/articles/components/article-list/article-list.component";
 import SeriesComponent from "./features/series/components/series/series.component";
-import LocalSeriesListComponent from "./features/series/components/series-list/local-series-list.component";
+import SeriesListComponent from "./features/series/components/series-list/series-list.component";
 import ListNavigatorComponent from "./shared/components/list-navigator/list-navigator.component";
 import ListPaginatorComponent from "./shared/components/list-paginator/list-paginator.component";
 import SavedArticleComponent from "./core/pages/dashboard/components/saved-article/saved-article.component";
@@ -36,10 +36,10 @@ const bootstrap: any =(window as any)['bootstrap'];
     AppComponent,
     AppNavbarComponent,
     DashboardComponent,
-    LocalArticleComponent,
-    LocalArticleListComponent,
+    ArticleComponent,
+    ArticleListComponent,
     SeriesComponent,
-    LocalSeriesListComponent,
+    SeriesListComponent,
     ListNavigatorComponent,
     ListPaginatorComponent,
     SavedArticleComponent,

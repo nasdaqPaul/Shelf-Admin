@@ -5,7 +5,7 @@ import {Series, SeriesArticle} from "../../types";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {editorjsConfig} from "../../../../shared/editor.config";
-import {Article} from "../../../../core/types";
+import {Article} from "../../../articles/types";
 
 @Component({
   templateUrl: 'series-editor.component.html',
@@ -71,11 +71,14 @@ export default class SeriesEditorComponent implements OnInit {
       } : {
         title: this.seriesTitle.value,
         description: editorData.blocks,
+        created: new Date(editorData.time!),
         updated: new Date(editorData.time!),
         articles: [...this.newArticles]
       }
       this.seriesService.saveSeries(seriesToSave).then(id => {
         if (id) {
+          seriesToSave.id = id;
+          this.series = seriesToSave;
           this.router.navigate(['series-editor', id]);
         }
         this.seriesArticles = [...this.series?.articles!]
@@ -103,6 +106,7 @@ export default class SeriesEditorComponent implements OnInit {
         } else {
           this.seriesService.saveSeries({
             title: this.seriesTitle.value,
+            created: new Date(data.time!),
             updated: new Date(data.time!),
             description: data.blocks,
             articles: []
@@ -117,10 +121,7 @@ export default class SeriesEditorComponent implements OnInit {
 
   addArticlesToSeries(articles: Article[]) {
     const seriesArticles: SeriesArticle[] = articles.map(article => {
-      return {
-        id: article.id!,
-        source: article.source
-      }
+      return article.source ? {id: article.id!, source: article.source} : {id: article.id!}
     });
 
     if (this.series) {

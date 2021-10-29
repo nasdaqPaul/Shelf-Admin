@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Si
 import {SeriesArticle} from "../../types";
 import {Modal} from "bootstrap";
 import {ArticleService} from "../../../articles/services/article.service";
-import {Article} from "../../../../core/types";
+import {Article} from "../../../articles/types";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -36,17 +36,14 @@ export default class SeriesArticleListComponent implements OnInit, OnDestroy, On
 
   ngOnInit() {
     this.addArticleModal = new Modal('#add-articles-modal');
-    this.articlesSub = this.articlesService.localArticles.subscribe(articles => {
+    this.articlesSub = this.articlesService.allArticles.subscribe(articles => {
       this.allArticles = [...articles];
       this.filterArticles();
     })
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     this.filterArticles();
-    console.log('Available: ',this.availableArticles);
-    console.log('Series:', this.seriesArticles);
   }
 
   ngOnDestroy() {
@@ -74,7 +71,6 @@ export default class SeriesArticleListComponent implements OnInit, OnDestroy, On
       this.articlesToBeAdded.push(article);
     } else {
       this.articlesToBeAdded = this.articlesToBeAdded.filter(article_ => article_.id !== article.id);
-      console.log(this.articlesToBeAdded);
     }
   }
 }

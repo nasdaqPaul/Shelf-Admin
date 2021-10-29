@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header d-inline-flex">
-    <h5 class="card-title py-1 my-auto me-auto">Articles</h5>
+    <h5 class="card-title py-1 my-auto me-auto">Series Articles</h5>
     <button type="button" class="btn btn-secondary btn-sm" (click)="openAddArticleDialog()"><i class="bi bi-plus"></i>Add</button>
   </div>
   <ol class="list-group list-group-numbered list-body" *ngIf="seriesArticles?.length; else no_content">
@@ -8,7 +8,9 @@
       <div class="ms-2 me-auto">
         <div class="fw-bold text-primary">{{seriesArticle.id | toTitle: allArticles | titlecase}}</div>
       </div>
-      <i class="bi bi-x-circle-fill text-muted"></i>
+      <i class="bi bi-arrow-up-circle-fill text-dark"></i>
+      <i class="bi bi-arrow-down-circle-fill text-dark ms-1"></i>
+      <i class="bi bi-x-circle-fill text-danger ms-1"></i>
     </li>
   </ol>
   <ng-template #no_content>
@@ -32,6 +34,9 @@
           </label>
         </li>
       </ul>
+      <div class="modal-body" *ngIf="!availableArticles.length">
+        <h1>No available articles</h1>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeAddArticleDialog()">Cancel</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="emitAddArticles()">Save</button>

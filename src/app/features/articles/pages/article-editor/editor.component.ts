@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {editorjsConfig} from "../../../../shared/editor.config";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ArticleService} from "../../services/article.service";
-import {Article} from "../../../../core/types";
+import {Article} from "../../types";
 import EditorJS from "@editorjs/editorjs";
 import {FormControl} from "@angular/forms";
 import NotificationService from "../../../../core/services/notification.service";
@@ -109,6 +109,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
         content: data.blocks
       } : {
         title: this.articleTitle.value,
+        created: new Date(data.time!),
         updated: new Date(data.time!),
         content: data.blocks,
       }
@@ -142,6 +143,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
           this.articleService.saveArticle({
             title: this.articleTitle.value,
             updated: new Date(content.time!),
+            created: new Date(content.time!),
             content: content.blocks,
           }).catch(err => {
             console.log(err)

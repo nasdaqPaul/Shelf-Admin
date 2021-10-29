@@ -5,9 +5,12 @@ import {Series} from "../../types";
 
 @Component({
   selector: 'local-series-list',
-  templateUrl: 'local-series-list.component.html'
+  templateUrl: 'series-list.component.html',
+  styleUrls: [
+    'series-list.component.scss'
+  ]
 })
-export default class LocalSeriesListComponent implements OnInit, OnDestroy {
+export default class SeriesListComponent implements OnInit, OnDestroy {
   private seriesSubscription!: Subscription
   series!: Series[]
 

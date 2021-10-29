@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {Article} from '../../../core/types';
+import {Article} from '../types';
 import DatabaseService from "../../../storage/local/db";
 
 
@@ -12,14 +12,18 @@ export class ArticleService {
 
   constructor(private db: DatabaseService) {
     db.articles.getAll().then(articles => {
-      for (const localArticle of articles) {
-        delete localArticle.content;
-      }
-      this.articlesObservable.next(articles)
+      this.pushArticlesIntoObservable(articles);
     })
   }
 
-  get localArticles() {
+  private pushArticlesIntoObservable(articles: Article[]) {
+    for (const article of articles) {
+      delete article.content;
+    }
+    this.articlesObservable.next([...articles])
+  }
+
+  get allArticles() {
     return this.articlesObservable.asObservable();
   }
 
@@ -27,25 +31,18 @@ export class ArticleService {
     return this.db.articles.get(id)
   }
 
-  saveArticle(article: Article, local = false) {
+  saveArticle(article: Article) {
     return new Promise<void | string>((resolve, reject) => {
       if (article.id) {
         this.db.articles.update(article, {returnAllArticles: true}).then((articles) => {
-          for (const article of articles!) {
-            delete article.content;
-          }
-          this.articlesObservable.next([...articles!])
+          this.pushArticlesIntoObservable(articles!);
           resolve()
         }).catch(err => {
           reject(err)
         })
       } else {
         this.db.articles.create(article, {returnAllArticles: true}).then((results) => {
-          const {createdId} = results;
-          for (const article of results.allArticles!) {
-            delete article.content;
-          }
-          this.articlesObservable.next([...results.allArticles!])
+          this.pushArticlesIntoObservable(results.allArticles!);
           resolve(results.createdId)
         }).catch(err => {
           reject(err)
@@ -55,12 +52,8 @@ export class ArticleService {
   }
 
   deleteArticle(id: string) {
-    // if (typeof id == "number") {
-      // const localArticles: Article[] = this.localStorageService.deleteArticle(id);
-      // localArticles.forEach((article) => {
-      //   delete article.content;
-      // })
-      // this.localArticlesObservable.next([...localArticles]);
-    // }
+    return this.db.articles.delete(id, {returnAllArticles: true}).then(articles => {
+      this.pushArticlesIntoObservable(articles!);
+    })
   }
 }

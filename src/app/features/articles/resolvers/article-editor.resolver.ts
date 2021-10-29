@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ArticleService} from "../services/article.service";
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
-import {Article} from "../../../core/types";
+import {Article} from "../types";
 
 @Injectable({
   providedIn: 'root'

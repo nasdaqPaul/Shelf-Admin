@@ -8,6 +8,7 @@ export interface Series {
   title: string;
   description: any;
   updated: Date;
+  created: Date;
   articles: SeriesArticle[]
 
 }

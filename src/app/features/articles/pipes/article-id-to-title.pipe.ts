@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from "@angular/core";
 import {ArticleService} from "../services/article.service";
-import {Article} from "../../../core/types";
+import {Article} from "../types";
 
 @Pipe({
   name: 'toTitle'
@@ -8,6 +8,7 @@ import {Article} from "../../../core/types";
 export default class ArticleIdToTitlePipe implements PipeTransform{
 
   transform(value: string, allArticles: Article[]): any {
-    return allArticles.find(article => article.id === value)?.title;
+    const article = allArticles.find(article => article.id === value)
+    return article? article.title : `Not Found!! - ${value}`
   }
 }

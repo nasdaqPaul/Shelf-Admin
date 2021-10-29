@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ArticleService} from "../../services/article.service";
 import {Subscription} from "rxjs";
-import {Article} from "../../../../core/types";
+import {Article} from "../../types";
 import {Modal} from "bootstrap";
 
 function sortArticlesByDate(articles: Article[], fromLatest: boolean) {
@@ -29,11 +29,11 @@ function sortArticlesByTitle(articles: Article[], ascending: boolean) {
 }
 
 @Component({
-  selector: 'local-article-list',
-  templateUrl: 'local-article-list.component.html',
-  styleUrls: ['local-article-list.component.css']
+  selector: 'article-list',
+  templateUrl: 'article-list.component.html',
+  styleUrls: ['article-list.component.css']
 })
-export default class LocalArticleListComponent implements OnInit, OnDestroy {
+export default class ArticleListComponent implements OnInit, OnDestroy {
   private localArticlesSubscription!: Subscription;
   private confirmDeleteDialog!: Modal;
   readonly articlesPerPage = 6;
@@ -50,7 +50,7 @@ export default class LocalArticleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.localArticlesSubscription = this.articleService.localArticles.subscribe((articles) => {
+    this.localArticlesSubscription = this.articleService.allArticles.subscribe((articles) => {
       this.localArticles = articles;
       this.buildPages();
     });
