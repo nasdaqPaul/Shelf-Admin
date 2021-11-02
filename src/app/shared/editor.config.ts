@@ -13,19 +13,19 @@ export const editorjsConfig = {
   tools: {
     Marker: {
       class: Marker,
-      shortcut: 'CMD+SHIFT+M'
+      shortcut: 'CMD+SHIFT+M',
     },
     header: {
       class: Header,
       inlineToolbar: [
-        'link', 'bold', 'italic'
-      ]
+        'link', 'bold', 'italic',
+      ],
     },
     list: {
       class: List,
       inlineToolbar: [
-        'link', 'bold'
-      ]
+        'link', 'bold',
+      ],
     },
     embed: {
       class: Embed,
@@ -33,9 +33,9 @@ export const editorjsConfig = {
       config: {
         services: {
           youtube: true,
-          coub: true
-        }
-      }
+          coub: true,
+        },
+      },
     },
   },
-}
+};

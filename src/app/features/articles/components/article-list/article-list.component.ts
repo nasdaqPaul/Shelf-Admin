@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {ArticleService} from "../../services/article.service";
-import {Subscription} from "rxjs";
-import {Article} from "../../types";
-import {Modal} from "bootstrap";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Modal } from 'bootstrap';
+import { ArticleService } from '../../services/article.service';
+import { Article } from '../../types';
 
 function sortArticlesByDate(articles: Article[], fromLatest: boolean) {
   if (fromLatest) {
@@ -10,13 +10,13 @@ function sortArticlesByDate(articles: Article[], fromLatest: boolean) {
       if (a.updated > b.updated) return 1;
       if (a.updated < b.updated) return -1;
       return 0;
-    })
+    });
   } else {
     articles.sort((a, b) => {
       if (a.updated < b.updated) return 1;
       if (a.updated > b.updated) return -1;
       return 0;
-    })
+    });
   }
 }
 
@@ -31,19 +31,27 @@ function sortArticlesByTitle(articles: Article[], ascending: boolean) {
 @Component({
   selector: 'article-list',
   templateUrl: 'article-list.component.html',
-  styleUrls: ['article-list.component.css']
+  styleUrls: ['article-list.component.css'],
 })
 export default class ArticleListComponent implements OnInit, OnDestroy {
   private localArticlesSubscription!: Subscription;
+
   private confirmDeleteDialog!: Modal;
+
   readonly articlesPerPage = 6;
+
   localArticles: Article[] = [];
+
   numberOfPages!: number;
+
   page!: Article[];
+
   articleToDelete!: Article | null;
+
   sortList = ['updated', 'title'];
+
   sortToggles = {
-    updated: true
+    updated: true,
   }
 
   constructor(private articleService: ArticleService) {
@@ -60,7 +68,7 @@ export default class ArticleListComponent implements OnInit, OnDestroy {
   private buildPages() {
     if (this.localArticles.length > this.articlesPerPage) {
       if (this.localArticles.length % this.articlesPerPage) {
-        this.numberOfPages = Math.trunc(this.localArticles.length / this.articlesPerPage) + 1
+        this.numberOfPages = Math.trunc(this.localArticles.length / this.articlesPerPage) + 1;
       } else {
         this.numberOfPages = this.localArticles.length / this.articlesPerPage;
       }
@@ -97,4 +105,3 @@ export default class ArticleListComponent implements OnInit, OnDestroy {
     }
   }
 }
-

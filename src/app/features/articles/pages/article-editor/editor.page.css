@@ -6,7 +6,11 @@
   width: 100%;
 }
 
-#article-header {
+#article-header, #hero-image {
   max-width: 650px;
   margin: 0 auto;
+}
+#hero-image img {
+  height: auto;
+  width: 100%;
 }

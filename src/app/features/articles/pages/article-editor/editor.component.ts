@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {editorjsConfig} from "../../../../shared/editor.config";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ArticleService} from "../../services/article.service";
-import {Article} from "../../types";
-import EditorJS from "@editorjs/editorjs";
-import {FormControl} from "@angular/forms";
-import NotificationService from "../../../../core/services/notification.service";
-import {Title} from "@angular/platform-browser";
-import {Modal, Toast, Tooltip} from "bootstrap";
-import {Location} from "@angular/common";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import EditorJS from '@editorjs/editorjs';
+import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Modal, Toast, Tooltip } from 'bootstrap';
+import { Location } from '@angular/common';
+import NotificationService from '../../../../core/services/notification.service';
+import { Article } from '../../types';
+import { ArticleService } from '../../services/article.service';
+import { editorjsConfig } from '../../../../shared/editor.config';
 
 const PAGE_TITLE = 'Shelf | Editor';
 
@@ -25,12 +25,18 @@ const PAGE_TITLE = 'Shelf | Editor';
   styleUrls: ['editor.page.css'],
 })
 export default class EditorComponent implements OnInit, OnDestroy {
-  private editor!: EditorJS;
+  editor!: EditorJS;
+
   private tagsModal!: Modal;
+
   private toolTips!: Tooltip[];
+
   private emptyEditorWarning!: Toast;
+
   private article!: Article;
+
   articleTitle!: FormControl;
+
   editorReady = false;
 
   constructor(private activatedRoute: ActivatedRoute, private articleService: ArticleService, private notificationService: NotificationService, private titleService: Title, private location: Location, private router: Router) {
@@ -38,14 +44,12 @@ export default class EditorComponent implements OnInit, OnDestroy {
   }
 
   buildToolTips() {
-    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    this.toolTips = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new Tooltip(tooltipTriggerEl)
-    })
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    this.toolTips = tooltipTriggerList.map((tooltipTriggerEl) => new Tooltip(tooltipTriggerEl));
   }
 
   async ngOnInit() {
-    this.article = this.activatedRoute.snapshot.data['article'];
+    this.article = this.activatedRoute.snapshot.data.article;
     if (this.article) {
       // @ts-ignore
       this.editor = new EditorJS({
@@ -55,18 +59,17 @@ export default class EditorComponent implements OnInit, OnDestroy {
         },
         onReady: () => {
           this.editorReady = true;
-        }
+        },
       });
       this.articleTitle = new FormControl(this.article.title);
     } else {
       // @ts-ignore
       this.editor = new EditorJS({
-          ...editorjsConfig,
-          onReady: () => {
-            this.editorReady = true;
-          }
+        ...editorjsConfig,
+        onReady: () => {
+          this.editorReady = true;
         },
-      );
+      });
       this.articleTitle = new FormControl('');
     }
     this.tagsModal = new Modal('#exampleModal');
@@ -78,7 +81,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
     this.editor.destroy();
     this.tagsModal.dispose();
     this.emptyEditorWarning.dispose();
-    this.toolTips.forEach(toolTip => toolTip.dispose())
+    this.toolTips.forEach((toolTip) => toolTip.dispose());
   }
 
   articleTags() {
@@ -86,9 +89,9 @@ export default class EditorComponent implements OnInit, OnDestroy {
   }
 
   saveArticle() {
-    //pull data from the editorJs instance
-    //check if content has changed
-    //if it has
+    // pull data from the editorJs instance
+    // check if content has changed
+    // if it has
     //  set the editor status to saving
     //  create a new article
     //  call the asycn function saveArticle from articl service with the new article
@@ -97,7 +100,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
     //    show toast
     //  on failure
     //    set editor status to not saving
-    this.editor.save().then(data => {
+    this.editor.save().then((data) => {
       if (!data.blocks.length && this.articleTitle.value.trim() === '') {
         this.emptyEditorWarning.show();
         return;
@@ -106,51 +109,48 @@ export default class EditorComponent implements OnInit, OnDestroy {
         ...this.article,
         title: this.articleTitle.value,
         updated: new Date(data.time!),
-        content: data.blocks
+        content: data.blocks,
       } : {
         title: this.articleTitle.value,
         created: new Date(data.time!),
         updated: new Date(data.time!),
         content: data.blocks,
-      }
+      };
       this.articleService.saveArticle(newArticle).then((id: string | void) => {
         if (id) {
-          this.article = {...newArticle, id: id};
+          this.article = { ...newArticle, id };
           // this.router.createUrlTree([this.location.path() + '/' + id])
           this.router.navigate(['/editor', id]);
         }
-      }).catch(err => {
+      }).catch((err) => {
         console.log(err);
       });
-    })
+    });
   }
 
   autoSave() {
-    //Called any time user navigates from the editor
-    this.editor.save().then(content => {
+    // Called any time user navigates from the editor
+    this.editor.save().then((content) => {
       if (this.article) {
-        //TODO: Check if content has changed
+        // TODO: Check if content has changed
         this.articleService.saveArticle({
           ...this.article,
           title: this.articleTitle.value,
           updated: new Date(content.time!),
           content: content.blocks,
-        }).catch(err => {
-          console.log(err)
-        })
-      } else {
-        if (content.blocks.length) {
-          this.articleService.saveArticle({
-            title: this.articleTitle.value,
-            updated: new Date(content.time!),
-            created: new Date(content.time!),
-            content: content.blocks,
-          }).catch(err => {
-            console.log(err)
-          })
-        }
+        }).catch((err) => {
+          console.log(err);
+        });
+      } else if (content.blocks.length) {
+        this.articleService.saveArticle({
+          title: this.articleTitle.value,
+          updated: new Date(content.time!),
+          created: new Date(content.time!),
+          content: content.blocks,
+        }).catch((err) => {
+          console.log(err);
+        });
       }
-    })
+    });
   }
-
 }

@@ -1,0 +1,9 @@
+.move-down, .move-up, .delete {
+  cursor: pointer;
+}
+
+abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
+}

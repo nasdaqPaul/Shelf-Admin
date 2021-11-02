@@ -1,4 +1,4 @@
-<main (keydown.control.s)="$event.preventDefault(); saveArticle()" class="bg-dark my-auto">
+<main (keydown.control.s)="$event.preventDefault(); saveArticle()" class="">
   <section class="container pt-3">
     <div class="card">
       <div class="card-header">
@@ -27,13 +27,14 @@
         </div>
         <div id="article-header" [hidden]="!editorReady">
           <div class="input-group input-group-lg mb-3" id="article-title">
-            <input type="text" class="form-control" placeholder="Article Title" aria-label="Article Title"
-                   [formControl]="articleTitle">
-            <button class="btn btn-outline-primary text-muted" type="button" (click)="articleTags()" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Article Tags"><i class="bi bi-tag"></i></button>
-            <button class="btn btn-outline-primary text-muted" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Hero Image"><i class="bi bi-image"></i></button>
+            <input type="text" class="form-control" placeholder="Article Title" aria-label="Article Title" [formControl]="articleTitle" (keydown.enter)="editor.focus(true)">
+            <button class="btn btn-outline-primary text-muted" type="button" (click)="articleTags()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Article Tags"><i class="bi bi-tag"></i></button>
+            <button class="btn btn-outline-primary text-muted" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hero Image" (click)="heroImageSelect.click()"><i class="bi bi-image"></i></button>
           </div>
+          <input type="file" accept="image/*" hidden #heroImageSelect>
+        </div>
+        <div id="hero-image" [hidden]="!editorReady">
+          <img src="assets/images/article-image-1.jpeg" alt="Hero Image">
         </div>
         <div id="article-body">
           <div id="editorjs"></div>
@@ -94,7 +95,7 @@
     </div>
   </section>
   <div class="toast align-items-center text-white bg-danger border-0 " role="alert" aria-live="assertive"
-       aria-atomic="true" >
+       aria-atomic="true">
     <div class="d-flex">
       <div class="toast-body">
         Hello, world! This is a toast message.
@@ -106,7 +107,7 @@
   <div class="toast-container">
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="emptyEditorToast">
       <div class="toast-header">
-<!--        <img src="..." class="rounded me-2" alt="...">-->
+        <!--        <img src="..." class="rounded me-2" alt="...">-->
         <strong class="me-auto">Bootstrap</strong>
         <small class="text-muted">just now</small>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>

@@ -8,7 +8,7 @@
     </div>
     <ng-template #seriesListBody>
       <div class="col-12" *ngFor="let s of series">
-        <local-series [series]="s"></local-series>
+        <local-series [series]="s" (deleteSeries)="deleteSeries($event)"></local-series>
       </div>
     </ng-template>
   </main>

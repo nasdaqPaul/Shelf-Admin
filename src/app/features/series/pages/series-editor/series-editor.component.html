@@ -21,7 +21,7 @@
         <div class="card-body series-body">
           <div id="series-header">
             <div class="input-group input-group mb-3" id="article-title">
-              <input type="text" class="form-control" placeholder="Series Title" aria-label="Series Title" [formControl]="seriesTitle">
+              <input type="text" class="form-control" placeholder="Series Title" aria-label="Series Title" [formControl]="seriesTitle" (keydown.enter)="editor.focus(true)">
               <button class="btn btn-outline-primary text-muted" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Article Tags"><i class="bi bi-tag"></i></button>
               <button class="btn btn-outline-primary text-muted" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hero Image"><i class="bi bi-image"></i></button>
             </div>
@@ -31,7 +31,7 @@
       </div>
     </section>
     <section class="col-4">
-      <series-article-list [seriesArticles]="seriesArticles" (addArticlesToSeries)="addArticlesToSeries($event)"></series-article-list>
+      <series-article-list [seriesArticles]="seriesArticles" (newSeriesArticles)="seriesArticlesChanged($event)"></series-article-list>
     </section>
   </div>
 </main>

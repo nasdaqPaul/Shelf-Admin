@@ -1,0 +1,12 @@
+<li class="list-group-item ">
+  <div *ngIf="article; else articleId" class="d-flex justify-content-between align-items-start">
+    <h6 class="fw-bold text-primary ms-2 me-auto text-truncate my-auto">{{article.title}}</h6>
+    <a [routerLink]="['/editor', article.id]"><i class="bi bi-box-arrow-up-right"></i></a>
+    <i class="bi bi-arrow-up-circle-fill text-muted ms-3 move-up " (click)="moveUp.emit(seriesArticle)"></i>
+    <i class="bi bi-arrow-down-circle-fill text-muted ms-1 move-down" (click)="moveDown.emit(seriesArticle)"></i>
+    <i class="bi bi-x-circle-fill text-danger ms-1 delete" (click)="remove.emit(seriesArticle)"></i>
+  </div>
+  <ng-template #articleId>
+    <div class="fw-bold text-primary">{{seriesArticle.id}}}</div>
+  </ng-template>
+</li>

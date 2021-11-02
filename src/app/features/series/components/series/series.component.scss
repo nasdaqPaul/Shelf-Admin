@@ -1,3 +1,9 @@
-h6.card-title {
+h6.card-title, .delete-series-icon {
   cursor: pointer;
+}
+.delete-series-icon {
+  font-size: 1.2rem;
+}
+.delete-series-icon:hover {
+  color: #dc3545 !important;
 }
