@@ -4,7 +4,7 @@ type QueryOptions = {
   returnAllItems: boolean
 }
 
-export class ObjectStore<Type> {
+export abstract class ObjectStore<Type> {
   constructor(private storeName: string, private db: IDBDatabase) {
 
   }

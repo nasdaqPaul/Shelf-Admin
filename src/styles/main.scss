@@ -122,7 +122,7 @@ $body-color: $ena-purple-dark-6;
 @import "node_modules/bootstrap";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
-app-root > ng-component, login {
+app-root > ng-component, login, dashboard {
   flex: 1 1 auto;
 }
 
