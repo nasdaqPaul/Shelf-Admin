@@ -1,19 +1,9 @@
 <section class="container">
-  <nav>
+  <nav class="my-2">
     <div class="nav nav-tabs nav-pills" id="nav-tab" role="tablist" style="border-bottom: 0px">
       <a [routerLink]="['/site', 'content', 'articles']" class="nav-link" routerLinkActive="active">Articles</a>
       <a class="nav-link" [routerLink]="['/site', 'content', 'series']" routerLinkActive="active">Series</a>
     </div>
   </nav>
   <router-outlet></router-outlet>
-  <!--  <div class="tab-content" id="nav-tabContent">-->
-  <!--    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">-->
-  <!--      <article-list></article-list>-->
-  <!--    </div>-->
-  <!--    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">-->
-  <!--      <p>clicked profile</p>-->
-  <!--      <p>clicked profile</p>-->
-  <!--      <p>clicked profile</p>-->
-  <!--    </div>-->
-  <!--  </div>-->
 </section>

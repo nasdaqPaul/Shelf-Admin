@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import ArticlesObjectStore from './articles.object-store';
 import SeriesObjectStore from './series.object-store';
+import ConnectedSitesObjectStore from './connected-sites.object-store';
 
 const DATABASE_NAME = 'shelf';
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 5;
 
 function initializeDatabase() {
   return new Promise<IDBDatabase>((resolve, reject) => {
@@ -26,6 +27,10 @@ function initializeDatabase() {
           keyPath: 'id',
         });
       }
+      if (db.objectStoreNames.contains('connected-sites')) {
+        db.deleteObjectStore('connected-sites');
+        const store = db.createObjectStore('connected-sites');
+      }
     };
     openDbRequest.onsuccess = function (ev) {
       console.info('Database initialized');
@@ -38,13 +43,16 @@ function initializeDatabase() {
 export default class DatabaseService {
   private static db: IDBDatabase;
 
-  articles!: ArticlesObjectStore
+  articles!: ArticlesObjectStore;
 
-  series!: SeriesObjectStore
+  series!: SeriesObjectStore;
+
+  connectedSites! :ConnectedSitesObjectStore;
 
   constructor() {
     this.articles = new ArticlesObjectStore('articles', DatabaseService.db);
     this.series = new SeriesObjectStore('series', DatabaseService.db);
+    this.connectedSites = new ConnectedSitesObjectStore('connected-sites', DatabaseService.db);
   }
 
   public static async initDb() {

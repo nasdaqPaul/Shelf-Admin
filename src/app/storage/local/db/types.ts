@@ -5,7 +5,7 @@ type QueryOptions = {
 }
 
 export abstract class ObjectStore<Type> {
-  constructor(private storeName: string, private db: IDBDatabase) {
+  constructor(protected storeName: string, protected db: IDBDatabase) {
 
   }
 

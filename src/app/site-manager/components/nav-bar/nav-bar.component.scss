@@ -1,0 +1,8 @@
+//@use "src/styles/main";
+
+.selected-link > i {
+  font-size: 1.6rem;
+}
+.disabled > i {
+  color: gray !important;
+}

@@ -1,14 +1,23 @@
-<ul class="nav container mb-2">
-  <li class="nav-item">
-    <a class="nav-link" [routerLink]="['/site']">Dashboard <i class="bi"></i></a>
+<ul class="nav container">
+  <li class="nav-item d-flex align-items-center">
+    <a class="nav-link pb-0 pt-1" [routerLink]="['/site']" routerLinkActive="selected-link" [class]="{disabled: appOffline || !connectedSites.length}" [routerLinkActiveOptions]="{exact: true}" ><i class="bi bi-speedometer text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard"></i></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" [routerLink]="['/site', 'content']" routerLinkActive="active">Site Content</a>
+  <li class="nav-item d-flex align-items-center">
+    <a class="nav-link pb-0 pt-1" [routerLink]="['/site', 'content']" routerLinkActive="selected-link" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-file-text text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Content"></i></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Configure</a>
+  <li class="nav-item d-flex align-items-center">
+    <a class="nav-link pb-0 pt-1" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-toggles text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Configuration"></i></a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Users</a>
+  <li class="nav-item d-flex align-items-center">
+    <a class="nav-link pb-0 pt-1" href="#" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-people-fill text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Users"></i></a>
+  </li>
+  <li class="nav-item d-flex ms-auto dropdown py-1" *ngIf="!appOffline">
+    <button class="btn btn-primary btn-sm" (click)="connectSite.emit()" *ngIf="!connectedSites.length">Connect Site</button>
+    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false" *ngIf="connectedSites.length">silla@site</button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" (click)="connectSite.emit()">Connect site</a></li>
+      <li><a class="dropdown-item" href="#">Another action</a></li>
+      <li><a class="dropdown-item" href="#">Something else here</a></li>
+    </ul>
   </li>
 </ul>
