@@ -7,6 +7,7 @@ import { SeriesPageComponent } from './series/pages/series/series-page.component
 import { ArticleDetailsComponent } from './articles/pages/article-details/article-details.component';
 import ArticleDetailResolver from './articles/resolvers/article-detail.resolver';
 import { NotFoundComponent } from './articles/pages/not-found/not-found.component';
+import {UsersPageComponent} from "./pages/users/users-page.component";
 
 export const ROUTES: Routes = [
   {
@@ -39,6 +40,7 @@ export const ROUTES: Routes = [
           },
         ],
       },
+      {path: 'users', component: UsersPageComponent}
     ],
   },
 ];

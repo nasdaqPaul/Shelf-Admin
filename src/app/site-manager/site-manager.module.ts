@@ -17,6 +17,9 @@ import { ArticleDetailsComponent } from './articles/pages/article-details/articl
 import ArticleDetailResolver from './articles/resolvers/article-detail.resolver';
 import { NotFoundComponent } from './articles/pages/not-found/not-found.component';
 import { ConnectSiteModalComponent } from './components/connect-site/connect-site-modal.component';
+import { UsersPageComponent } from './pages/users/users-page.component';
+import { UsersListComponent } from './users/components/users-list/users-list.component';
+import { UsersListItemComponent } from './users/components/users-list-item/users-list-item.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { ConnectSiteModalComponent } from './components/connect-site/connect-sit
     ArticleDetailsComponent,
     NotFoundComponent,
     ConnectSiteModalComponent,
+    UsersPageComponent,
+    UsersListComponent,
+    UsersListItemComponent,
   ],
   imports: [
     CommonModule,

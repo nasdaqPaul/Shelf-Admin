@@ -1,9 +1,22 @@
-<section class="container">
-  <nav class="my-2">
-    <div class="nav nav-tabs nav-pills" id="nav-tab" role="tablist" style="border-bottom: 0px">
-      <a [routerLink]="['/site', 'content', 'articles']" class="nav-link" routerLinkActive="active">Articles</a>
-      <a class="nav-link" [routerLink]="['/site', 'content', 'series']" routerLinkActive="active">Series</a>
-    </div>
-  </nav>
+<section class="container pt-2">
+  <header class="mb-2">
+    <ul class="nav">
+      <li class="nav-item d-flex align-items-center">
+        <span class="navbar-brand text-primary">Site Content</span>
+      </li>
+      <li class="nav-item ms-auto">
+          <div class="nav nav-tabs nav-pills"role="tablist" style="border-bottom: 0px !important;">
+            <a [routerLink]="['/site', 'content', 'articles']" class="nav-link" routerLinkActive="active">Articles</a>
+            <a class="nav-link" [routerLink]="['/site', 'content', 'series']" routerLinkActive="active">Series</a>
+          </div>
+      </li>
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#">Link</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+<!--      </li>-->
+    </ul>
+  </header>
   <router-outlet></router-outlet>
 </section>
