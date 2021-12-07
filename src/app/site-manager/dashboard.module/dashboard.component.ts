@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Connection } from '../../../storage/local/db/connected-sites.object-store';
+import { AuthService } from '../services/auth.service';
+import { Connection } from '../../storage/local/db/connected-sites.object-store';
 
 @Component({
   templateUrl: './dashboard.component.html',

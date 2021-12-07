@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from '../../types';
-import { parserBlocks } from '../../../utils/parser';
+import { parserBlocks } from '../../../../utils/parser';
 
 @Component({
-  templateUrl: './article-details.component.html',
-  styleUrls: ['./article-details.component.scss'],
+  templateUrl: './article-details.page.component.html',
+  styleUrls: ['./article-details.page.component.scss'],
 })
-export class ArticleDetailsComponent implements OnInit {
+export class ArticleDetailsPageComponent implements OnInit {
   article!: Article;
 
   constructor(private activatedRoute: ActivatedRoute) { }

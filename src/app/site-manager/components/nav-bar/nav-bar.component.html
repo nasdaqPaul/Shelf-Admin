@@ -6,7 +6,7 @@
     <a class="nav-link pb-0 pt-1" [routerLink]="['/site', 'content']" routerLinkActive="selected-link" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-file-text text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Content"></i></a>
   </li>
   <li class="nav-item d-flex align-items-center">
-    <a class="nav-link pb-0 pt-1" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-toggles text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Configuration"></i></a>
+    <a class="nav-link pb-0 pt-1" routerLink="config" routerLinkActive="selected-link" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-toggles text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Configuration"></i></a>
   </li>
   <li class="nav-item d-flex align-items-center">
     <a class="nav-link pb-0 pt-1" [routerLink]="['/site', 'users']" routerLinkActive="selected-link" [class]="{disabled: appOffline || !connectedSites.length}"><i class="bi bi-people-fill text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Users"></i></a>

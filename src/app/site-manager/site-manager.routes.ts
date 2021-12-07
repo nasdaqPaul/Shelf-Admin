@@ -1,23 +1,27 @@
-import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {Routes} from '@angular/router';
+import {DashboardComponent} from './dashboard.module/dashboard.component';
 import SiteManagerComponent from './site-manager.component';
-import { ContentComponent } from './pages/content/content.component';
-import { ArticlesComponent } from './articles/pages/articles/articles.component';
-import { SeriesPageComponent } from './series/pages/series/series-page.component';
-import { ArticleDetailsComponent } from './articles/pages/article-details/article-details.component';
-import ArticleDetailResolver from './articles/resolvers/article-detail.resolver';
-import { NotFoundComponent } from './articles/pages/not-found/not-found.component';
-import {UsersPageComponent} from "./pages/users/users-page.component";
+import {ContentPageComponent} from './content.module/components/content.page/content.page.component';
+import {ArticlesComponent} from './content.module/articles/components/articles.page/articles.component';
+import {SeriesPageComponent} from './content.module/series/pages/series/series-page.component';
+import {ArticleDetailsPageComponent} from './content.module/articles/components/article-details.page/article-details.page.component';
+import ArticleDetailResolver from './content.module/articles/resolvers/article-detail.resolver';
+import {NotFoundComponent} from './content.module/articles/components/not-found.page/not-found.component';
+import {UsersPageComponent} from "./users.module/components/users.page/users-page.component";
+import {UsersListComponent} from "./users.module/components/users-list/users-list.component";
+import {CreateUserPageComponent} from "./users.module/components/create-user.page/create-user-page.component";
+import {UserDetailsPageComponent} from "./users.module/components/user-details.page/user-details.page.component";
+import {ConfigPageComponent} from "./config.module/components/config.page/config.page.component";
 
 export const ROUTES: Routes = [
   {
     path: 'site',
     component: SiteManagerComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      {path: '', component: DashboardComponent},
       {
         path: 'content',
-        component: ContentComponent,
+        component: ContentPageComponent,
         children: [
           {
             path: '', redirectTo: '/site/content/articles', pathMatch: 'full',
@@ -33,14 +37,23 @@ export const ROUTES: Routes = [
           },
           {
             path: 'articles/:id',
-            component: ArticleDetailsComponent,
+            component: ArticleDetailsPageComponent,
             resolve: {
               article: ArticleDetailResolver,
             },
           },
         ],
       },
-      {path: 'users', component: UsersPageComponent}
+      {
+        path: 'users', component: UsersPageComponent, children: [
+          {path: '', component: UsersListComponent},
+          {path: 'create', component: CreateUserPageComponent},
+          {path: ':id', component: UserDetailsPageComponent}
+        ]
+      },
+      {
+        path: 'config', component: ConfigPageComponent
+      }
     ],
   },
 ];
