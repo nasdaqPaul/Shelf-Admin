@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Connection } from '../../storage/local/db/connected-sites.object-store';
+import {SitesService} from "../services/sites.service";
 
 @Component({
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  connectedSites!: Connection[]
+  connectedSites!: Connection[];
+  currentSite!: Connection | null;
 
-  constructor(private authService: AuthService) {
+  constructor(private sites: SitesService) {
   }
 
   ngOnInit(): void {
-    this.authService.connectedSites.subscribe((connections) => {
+    this.sites.connectedSites.subscribe((connections) => {
       this.connectedSites = [...connections];
     });
+    this.sites.currentSite.subscribe(connection => {
+      this.currentSite = connection;
+    })
   }
 }

@@ -13,11 +13,11 @@
   </li>
   <li class="nav-item d-flex ms-auto dropdown py-1" *ngIf="!appOffline">
     <button class="btn btn-primary btn-sm" (click)="connectSite.emit()" *ngIf="!connectedSites.length">Connect Site</button>
-    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false" *ngIf="connectedSites.length">silla@site</button>
+    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false" *ngIf="connectedSites.length">{{currentSiteConnection?.username}}@{{currentSiteConnection?.host}}</button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
       <li><a class="dropdown-item" (click)="connectSite.emit()">Connect site</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#">Disconnect</a></li>
     </ul>
   </li>
 </ul>

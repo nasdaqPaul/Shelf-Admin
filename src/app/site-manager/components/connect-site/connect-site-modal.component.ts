@@ -1,36 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Alert } from 'bootstrap';
-import { catchError } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {SitesService} from "../../services/sites.service";
+import {Modal} from "bootstrap";
 
 @Component({
   selector: 'connect-site',
   templateUrl: './connect-site-modal.component.html',
   styleUrls: ['./connect-site-modal.component.css'],
 })
-export class ConnectSiteModalComponent implements OnInit {
+export class ConnectSiteModalComponent implements OnInit, OnDestroy {
+  private connectSiteModal!: Modal;
   connectSiteForm = new FormGroup({
     host: new FormControl(''),
     username: new FormControl(''),
     password: new FormControl(''),
   })
 
-  showFailedAuthAlert = false;
+  failedAuth = false;
+  alreadyConnected = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private sites: SitesService) {
   }
 
   ngOnInit(): void {
-
+    this.connectSiteModal = new Modal('#connect-site-modal');
+  }
+  ngOnDestroy() {
+    this.connectSiteModal.dispose();
   }
 
-  connect() {
-    console.log(this.connectSiteForm.value);
-    this.authService.connect(this.connectSiteForm.value).pipe(catchError((error: HttpErrorResponse) => {
-      if (error.status === 401) this.showFailedAuthAlert = true;
-      throw error;
-    })).subscribe();
+  async connect() {
+    try {
+      await this.sites.connect(this.connectSiteForm.value);
+      this.connectSiteModal.hide();
+    } catch (error) {
+      if (error.status === 401) {
+        this.alreadyConnected = false;
+        this.failedAuth = true;
+      } else {
+        this.alreadyConnected = true;
+        this.failedAuth = false;
+      }
+    }
+  }
+
+  connectSite() {
+    this.alreadyConnected = false;
+    this.failedAuth = false;
+    this.connectSiteForm.reset();
+    this.connectSiteModal.show();
   }
 }

@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="row g-2" [formGroup]="connectSiteForm">
+        <form class="row g-2" [formGroup]="connectSiteForm" >
           <div class="col-12">
             <input type="text" class="form-control" placeholder="Site host" aria-label="First name" formControlName="host" required>
           </div>
@@ -17,8 +17,11 @@
             <input type="password" class="form-control" placeholder="Password" aria-label="Last name" formControlName="password" required>
           </div>
         </form>
-        <div class="alert alert-danger my-4" role="alert" *ngIf="showFailedAuthAlert">
+        <div class="alert alert-danger my-4" role="alert" *ngIf="failedAuth">
           <strong>Oops. Connection to site failed.</strong><br>Check your username and password and try again
+        </div>
+        <div class="alert alert-danger my-4" role="alert" *ngIf="alreadyConnected">
+          <strong>Already Connected.</strong><br>You are already connected to this site.
         </div>
       </div>
       <div class="modal-footer justify-content-start">

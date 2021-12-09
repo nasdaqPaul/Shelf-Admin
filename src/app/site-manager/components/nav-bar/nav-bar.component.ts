@@ -1,12 +1,10 @@
-import {
-  Component, EventEmitter, OnDestroy, OnInit, Output,
-} from '@angular/core';
-import { Tooltip } from 'bootstrap';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, EventEmitter, OnDestroy, OnInit, Output,} from '@angular/core';
+import {Tooltip} from 'bootstrap';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import NetworkStatusService from '../../../core/services/network-status.service';
-import { AuthService } from '../../services/auth.service';
-import { Connection } from '../../../storage/local/db/connected-sites.object-store';
+import {Connection} from '../../../storage/local/db/connected-sites.object-store';
+import {SitesService} from "../../services/sites.service";
 
 @Component({
   selector: 'nav-bar',
@@ -15,16 +13,14 @@ import { Connection } from '../../../storage/local/db/connected-sites.object-sto
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   appOffline!: boolean;
-
   private toolTips!: Tooltip[];
-
   private ngUnsub = new Subject();
-
   connectedSites!: Connection[];
+  currentSiteConnection!: Connection | null;
 
   @Output() connectSite = new EventEmitter();
 
-  constructor(private net: NetworkStatusService, private authService: AuthService) {
+  constructor(private net: NetworkStatusService, private sites: SitesService) {
     this.net.status.subscribe((status) => {
       this.appOffline = status !== 'online';
     });
@@ -37,9 +33,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buildToolTips();
-    this.authService.connectedSites.pipe(takeUntil(this.ngUnsub)).subscribe((connections) => {
+    this.sites.connectedSites.pipe(takeUntil(this.ngUnsub)).subscribe((connections) => {
       this.connectedSites = [...connections];
     });
+    this.sites.currentSite.pipe(takeUntil(this.ngUnsub)).subscribe(conn => {
+      this.currentSiteConnection = conn
+    })
   }
 
   ngOnDestroy() {

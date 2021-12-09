@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Modal } from 'bootstrap';
+import {Component} from '@angular/core';
 import NetworkStatusService from '../core/services/network-status.service';
 
 @Component({
   template: `
     <main>
       <header class="bg-light">
-        <nav-bar (connectSite)="openConnectSiteModel()"></nav-bar>
+        <nav-bar (connectSite)="conn.connectSite()"></nav-bar>
       </header>
       <router-outlet *ngIf="status==='online'; else offline"></router-outlet>
       <ng-template #offline>
@@ -17,14 +16,12 @@ import NetworkStatusService from '../core/services/network-status.service';
           <a class="btn btn-primary" routerLink="/">Go back to My Workspace</a>
         </section>
       </ng-template>
-      <connect-site></connect-site>
+      <connect-site #conn></connect-site>
     </main>
   `,
 })
-export default class SiteManagerComponent implements OnInit {
+export default class SiteManagerComponent {
   status!: string;
-
-  private connectSiteModal!: Modal;
 
   constructor(private net: NetworkStatusService) {
     net.status.subscribe((status) => {
@@ -32,11 +29,5 @@ export default class SiteManagerComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.connectSiteModal = new Modal('#connect-site-modal');
-  }
 
-  openConnectSiteModel() {
-    this.connectSiteModal.show();
-  }
 }

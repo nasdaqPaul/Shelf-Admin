@@ -1,7 +1,10 @@
+import {UserProfile} from "../../../site-manager/users.module/types";
+
 export interface Connection {
   host: string,
   username: string,
   accessToken: string
+  user?: UserProfile
 }
 
 type QueryOptions = {
@@ -16,7 +19,7 @@ export default class ConnectedSitesObjectStore {
     return new Promise<void | Connection[]>((resolve, reject) => {
       const tx = this.db.transaction(this.storeName, 'readwrite');
       const objectStore = tx.objectStore(this.storeName);
-      const writeReq = objectStore.add(connection, ['username', 'host']);
+      const writeReq = objectStore.add(connection);
       let readReq: IDBRequest<any[]>;
 
       writeReq.onerror = function () {
