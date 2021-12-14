@@ -10,8 +10,8 @@ import { Article } from '../../types';
 })
 export default class ArticleComponent {
   @Input() article!: Article
-
   @Output() deleteArticle = new EventEmitter<Article>()
+  @Output() uploadArticle = new EventEmitter<Article>()
 
   constructor() {
   }

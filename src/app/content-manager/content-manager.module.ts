@@ -18,6 +18,7 @@ import { default as SeriesAutosaveGuard } from './series/guards/autosave.guard';
 import { default as ArticleAutosaveGuard } from './articles/guards/autosave.guard';
 import ContentManagerComponent from './content-manager.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { UploadArticleComponent } from './articles/components/upload-article/upload-article.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     SeriesEditorComponent,
     ContentManagerComponent,
     NavBarComponent,
+    UploadArticleComponent,
 
   ],
   imports: [

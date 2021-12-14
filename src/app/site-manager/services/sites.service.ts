@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthService} from "./auth.service";
 import DatabaseService from "../../storage/local/db";
 import {BehaviorSubject} from "rxjs";
-import {Connection} from "../../storage/local/db/connected-sites.object-store";
+import {SiteConnection} from "../../storage/local/db/connected-sites.object-store";
 import {UserProfile} from "../users.module/types";
 
 @Injectable({
@@ -10,8 +10,8 @@ import {UserProfile} from "../users.module/types";
 })
 export class SitesService {
 
-  private connectedSitesObservable = new  BehaviorSubject<Connection[]>([]);
-  private currentSiteObservable =  new BehaviorSubject<Connection | null>(null);
+  private connectedSitesObservable = new  BehaviorSubject<SiteConnection[]>([]);
+  private currentSiteObservable =  new BehaviorSubject<SiteConnection | null>(null);
 
   get currentSite(){
     return this.currentSiteObservable.asObservable();
@@ -20,9 +20,10 @@ export class SitesService {
   constructor(private authService: AuthService, private db: DatabaseService) {
     this.db.connectedSites.getAll().then(connections => {
       this.connectedSitesObservable.next(connections);
-      if(localStorage.getItem('current-site')){
-        this.currentSiteObservable.next(JSON.parse(<string>localStorage.getItem('current-site')));
+      if(!localStorage.getItem('current-site') && connections.length){
+        this.setCurrentSite(connections[0]);
       }
+      this.currentSiteObservable.next(JSON.parse(<string>localStorage.getItem('current-site')));
     })
 
   }
@@ -31,7 +32,7 @@ export class SitesService {
   }
   async connect(credentials: { host: string, username: string, password: string }) {
     const resBody = await this.authService.login(credentials).toPromise();
-    const newConnection: Connection =  {
+    const newConnection: SiteConnection =  {
       host: credentials.host,
       username: credentials.username,
       accessToken: resBody.accessToken,
@@ -41,7 +42,7 @@ export class SitesService {
     this.connectedSitesObservable.next(allConnections!);
     this.setCurrentSite(newConnection);
   }
-  setCurrentSite(connection: Connection){
+  setCurrentSite(connection: SiteConnection){
     localStorage.setItem('current-site', JSON.stringify(connection));
     this.currentSiteObservable.next(connection);
   }

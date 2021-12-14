@@ -4,11 +4,12 @@
   </list-navigator>
   <main class="row g-2 mt-1">
     <div class="col-12 col-md-4" *ngFor="let article of page">
-      <article [article]="article" (deleteArticle)="requestDeleteArticle($event)"></article>
+      <article [article]="article" (deleteArticle)="requestDeleteArticle($event)" (uploadArticle)="uploader.upload($event)"></article>
     </div>
     <div *ngIf="!localArticles.length">
       <h1>Nothing to see here</h1>
     </div>
+    <upload-article #uploader></upload-article>
   </main>
   <footer class="mt-3">
     <div class="modal fade" id="confirm-delete-local-article" tabindex="-1" aria-labelledby="confirm-delete-local-article" aria-hidden="true">

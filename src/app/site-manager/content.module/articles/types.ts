@@ -3,5 +3,6 @@ export interface Article {
   title: string,
   created: Date,
   updated: Date,
-  content?: [any]
+  content?: [any],
+  author: any
 }

@@ -3,7 +3,7 @@ import {Tooltip} from 'bootstrap';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import NetworkStatusService from '../../../core/services/network-status.service';
-import {Connection} from '../../../storage/local/db/connected-sites.object-store';
+import {SiteConnection} from '../../../storage/local/db/connected-sites.object-store';
 import {SitesService} from "../../services/sites.service";
 
 @Component({
@@ -15,8 +15,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
   appOffline!: boolean;
   private toolTips!: Tooltip[];
   private ngUnsub = new Subject();
-  connectedSites!: Connection[];
-  currentSiteConnection!: Connection | null;
+  connectedSites!: SiteConnection[];
+  currentSiteConnection!: SiteConnection | null;
 
   @Output() connectSite = new EventEmitter();
 
@@ -45,5 +45,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.toolTips.forEach((tooTip) => tooTip.dispose());
     this.ngUnsub.next();
     this.ngUnsub.complete();
+  }
+
+  switchSite(connection: SiteConnection) {
+    this.sites.setCurrentSite(connection);
   }
 }

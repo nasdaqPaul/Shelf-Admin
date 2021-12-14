@@ -1,6 +1,6 @@
 import {UserProfile} from "../../../site-manager/users.module/types";
 
-export interface Connection {
+export interface SiteConnection {
   host: string,
   username: string,
   accessToken: string
@@ -15,8 +15,8 @@ export default class ConnectedSitesObjectStore {
   constructor(private storeName: string, private db: IDBDatabase) {
   }
 
-  add(connection: Connection, options: QueryOptions) {
-    return new Promise<void | Connection[]>((resolve, reject) => {
+  add(connection: SiteConnection, options: QueryOptions) {
+    return new Promise<void | SiteConnection[]>((resolve, reject) => {
       const tx = this.db.transaction(this.storeName, 'readwrite');
       const objectStore = tx.objectStore(this.storeName);
       const writeReq = objectStore.add(connection);
@@ -43,7 +43,7 @@ export default class ConnectedSitesObjectStore {
   }
 
   get(username: string, host: string) {
-    return new Promise<void | Connection>((resolve, reject) => {
+    return new Promise<void | SiteConnection>((resolve, reject) => {
       const tx = this.db.transaction(this.storeName, 'readonly');
       const store = tx.objectStore(this.storeName);
       const index = store.index('connectionString');
@@ -60,7 +60,7 @@ export default class ConnectedSitesObjectStore {
   }
 
   getAll() {
-    return new Promise<Connection[]>((resolve, reject) => {
+    return new Promise<SiteConnection[]>((resolve, reject) => {
       const tx = this.db.transaction(this.storeName, 'readonly');
       const objectStore = tx.objectStore(this.storeName);
       const readReq = objectStore.getAll();

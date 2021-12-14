@@ -18,6 +18,7 @@ export class ConnectSiteModalComponent implements OnInit, OnDestroy {
 
   failedAuth = false;
   alreadyConnected = false;
+  networkError = false;
 
   constructor(private sites: SitesService) {
   }
@@ -36,10 +37,18 @@ export class ConnectSiteModalComponent implements OnInit, OnDestroy {
     } catch (error) {
       if (error.status === 401) {
         this.alreadyConnected = false;
+        this.networkError = false;
         this.failedAuth = true;
-      } else {
+      }
+      else if(error.status === 0){
+        this.networkError = true;
+        this.alreadyConnected = false;
+        this.failedAuth = false;
+      }
+      else {
         this.alreadyConnected = true;
         this.failedAuth = false;
+        this.networkError = false;
       }
     }
   }
@@ -47,6 +56,7 @@ export class ConnectSiteModalComponent implements OnInit, OnDestroy {
   connectSite() {
     this.alreadyConnected = false;
     this.failedAuth = false;
+    this.networkError = false;
     this.connectSiteForm.reset();
     this.connectSiteModal.show();
   }

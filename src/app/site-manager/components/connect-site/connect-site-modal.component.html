@@ -23,6 +23,9 @@
         <div class="alert alert-danger my-4" role="alert" *ngIf="alreadyConnected">
           <strong>Already Connected.</strong><br>You are already connected to this site.
         </div>
+        <div class="alert alert-danger my-4" role="alert" *ngIf="networkError">
+          <strong>Network Error</strong><br>The site host is unreachable; Check it or try again later
+        </div>
       </div>
       <div class="modal-footer justify-content-start">
         <button class="btn btn-light ms-0">Forgot username/password</button>

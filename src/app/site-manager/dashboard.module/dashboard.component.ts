@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Connection } from '../../storage/local/db/connected-sites.object-store';
+import { SiteConnection } from '../../storage/local/db/connected-sites.object-store';
 import {SitesService} from "../services/sites.service";
 
 @Component({
@@ -8,8 +8,8 @@ import {SitesService} from "../services/sites.service";
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  connectedSites!: Connection[];
-  currentSite!: Connection | null;
+  connectedSites!: SiteConnection[];
+  currentSite!: SiteConnection | null;
 
   constructor(private sites: SitesService) {
   }
