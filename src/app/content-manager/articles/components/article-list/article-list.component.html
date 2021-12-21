@@ -2,7 +2,7 @@
   <list-navigator [sortList]="sortList" (sorted)="sort($event)">
     <ng-container title>Articles</ng-container>
   </list-navigator>
-  <main class="row g-2 mt-1">
+  <main class="row g-2">
     <div class="col-12 col-md-4" *ngFor="let article of page">
       <article [article]="article" (deleteArticle)="requestDeleteArticle($event)" (uploadArticle)="uploader.upload($event)"></article>
     </div>

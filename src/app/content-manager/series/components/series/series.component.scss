@@ -1,9 +1,11 @@
 h6.card-title, .delete-series-icon {
   cursor: pointer;
 }
-.delete-series-icon {
+.delete-series-icon, .upload-series-icon {
   font-size: 1.2rem;
+  cursor: pointer;
 }
 .delete-series-icon:hover {
   color: #dc3545 !important;
 }
+//.up

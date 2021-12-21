@@ -33,10 +33,11 @@ export class UploadArticleComponent implements OnInit {
     this.uploadArticle = uploadArticle;
     this.uploadArticleModal.show();
   }
+
   async up() {
     const article = await this.db.articles.get(this.uploadArticle!.id!)
     this.uploader.upload(article!, this.uploadSiteFormControl.value).subscribe({
-      next: ()=> {
+      next: () => {
         this.uploadArticleModal.hide();
       },
       error: err => {

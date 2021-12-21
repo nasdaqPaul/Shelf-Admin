@@ -1,5 +1,5 @@
 <th scope="row" class="article-title" [routerLink]="['/site/content/articles', InputArticle.id]">{{InputArticle.title}}</th>
-<th scope="row">{{InputArticle.author.profile.firstName}} {{InputArticle.author.profile.lastName}}</th>
+<td [routerLink]="['/site/users/', InputArticle.author.id]">{{InputArticle.author.profile.firstName}} {{InputArticle.author.profile.lastName}}</td>
 <td>12th October 2021</td>
 <td><span class="badge bg-success">Online</span></td>
 <td>200</td>

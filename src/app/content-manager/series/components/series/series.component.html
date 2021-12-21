@@ -1,7 +1,11 @@
 <div class="card">
   <div class="card-header d-inline-flex p-0">
-    <h6 class="card-title m-2" [routerLink]="['/series-editor/', series.id]">{{series.title | titlecase}}</h6>
-    <i class="bi bi-trash-fill text-muted ms-auto m-1 delete-series-icon" (click)="deleteSeries.emit(series)"></i>
+    <h6 class="card-title m-2" [routerLink]="['/series-editor/', series.id]" *ngIf="series.title; else untitled">{{series.title}}</h6>
+    <ng-template #untitled>
+      <h6 class="card-title m-2" [routerLink]="['/series-editor', series.id]">Untitled</h6>
+    </ng-template>
+    <i class="bi bi-cloud-upload-fill text-muted ms-auto m-1 upload-series-icon" (click)="deleteSeries.emit(series)"></i>
+    <i class="bi bi-trash-fill text-muted m-1 delete-series-icon" (click)="deleteSeries.emit(series)"></i>
   </div>
   <div class="card-body p-2">
     <h6 class="card-subtitle mb-2 text-muted">{{series.articles.length}} Articles</h6>
