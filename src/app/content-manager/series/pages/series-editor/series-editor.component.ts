@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import SeriesService from '../../services/series.service';
 import { Series, SeriesArticle } from '../../types';
-import { editorjsConfig } from '../../../../shared/editor.config';
+import { editorjsConfig } from '../../../../shared/components/editorjs/editorjs.config';
 
 @Component({
   templateUrl: 'series-editor.component.html',

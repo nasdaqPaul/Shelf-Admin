@@ -14,6 +14,7 @@ import { BS_TOKEN } from './core/services/bootsratp.service';
 import DatabaseService from './storage/local/db';
 import { SiteManagerModule } from './site-manager/site-manager.module';
 import { ContentManagerModule } from './content-manager/content-manager.module';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const { bootstrap } = window as any;
 
@@ -34,6 +35,7 @@ const { bootstrap } = window as any;
     RouterModule.forRoot(routes),
     SiteManagerModule,
     ContentManagerModule,
+    BrowserAnimationsModule
   ],
   providers: [
     DatabaseService,

@@ -1,5 +1,7 @@
 <header>
   <app-navbar></app-navbar>
 </header>
-<router-outlet></router-outlet>
+<div class="app-page" [@routeAnimations]="path">
+  <router-outlet #outlet='outlet'></router-outlet>
+</div>
 <app-footer></app-footer>

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Modal } from 'bootstrap';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../types';
+import {animate, animateChild, query, stagger, style, transition, trigger} from "@angular/animations";
 
 function sortArticlesByDate(articles: Article[], fromLatest: boolean) {
   if (fromLatest) {
@@ -32,24 +33,37 @@ function sortArticlesByTitle(articles: Article[], ascending: boolean) {
   selector: 'article-list',
   templateUrl: 'article-list.component.html',
   styleUrls: ['article-list.component.css'],
+  animations: [
+    trigger('staggerAnimation', [
+      transition('* => *', [
+        query('main.row', [
+          animate('0.8s ease-in', style({opacity: 0})),
+          animate('0.2s ease-out', style({opacity: '*'}))
+        ])
+      ])
+    ]),
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(-10px)' }),
+        animate('250ms', style({ opacity: 1, transform: 'translateX(0px)' }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('250ms', style({ opacity: 0, transform: 'translateX(10px)' }))
+      ])
+    ])
+  ]
 })
 export default class ArticleListComponent implements OnInit, OnDestroy {
   private localArticlesSubscription!: Subscription;
-
   private confirmDeleteDialog!: Modal;
-
   readonly articlesPerPage = 6;
 
   localArticles: Article[] = [];
-
   numberOfPages!: number;
-
   page!: Article[];
-
   articleToDelete!: Article | null;
-
   sortList = ['updated', 'title'];
-
   sortToggles = {
     updated: true,
   }

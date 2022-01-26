@@ -4,7 +4,7 @@ import SeriesObjectStore from './series.object-store';
 import ConnectedSitesObjectStore from './connected-sites.object-store';
 
 const DATABASE_NAME = 'shelf';
-const DATABASE_VERSION = 6;
+const DATABASE_VERSION = 1;
 
 function initializeDatabase() {
   return new Promise<IDBDatabase>((resolve, reject) => {
@@ -27,8 +27,8 @@ function initializeDatabase() {
           keyPath: 'id',
         });
       }
-      if (db.objectStoreNames.contains('connected-sites')) {
-        db.deleteObjectStore('connected-sites');
+      if (!db.objectStoreNames.contains('connected-sites')) {
+        // db.deleteObjectStore('connected-sites');
         const store = db.createObjectStore('connected-sites', {
           keyPath: ['username', 'host']
         });

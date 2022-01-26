@@ -1,16 +1,18 @@
 .card-body {
   height: 70vh;
   overflow-y: scroll;
-  font-family: 'DejaVu Serif';
   /*color: black;*/
   width: 100%;
+}
+#article-header, #article-body {
+  font-family: 'DejaVu Serif';
 }
 
 #article-header, #hero-image {
   max-width: 650px;
   margin: 0 auto;
 }
-#hero-image img {
-  height: auto;
-  width: 100%;
+#hero-image {
+  height: 40vh;
+  max-width: 900px;
 }

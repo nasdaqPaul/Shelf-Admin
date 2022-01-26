@@ -1,6 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { ArticleService } from '../services/article.service';
-import { Article } from '../types';
+import {Pipe, PipeTransform} from '@angular/core';
+import {Article} from '../types';
 
 @Pipe({
   name: 'toTitle',

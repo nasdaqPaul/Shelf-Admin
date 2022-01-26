@@ -5,4 +5,5 @@ export interface Article {
   updated: Date
   content?: any
   source?: any
+  heroImage?: File
 }
