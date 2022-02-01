@@ -4,15 +4,16 @@
   /*color: black;*/
   width: 100%;
 }
-#article-header, #article-body {
+#article-body {
   font-family: 'DejaVu Serif';
 }
 
-#article-header, #hero-image {
+#article-header {
   max-width: 650px;
   margin: 0 auto;
 }
 #hero-image {
-  height: 40vh;
-  max-width: 900px;
+  height: 50vh;
+  max-width: 650px;
+  position: relative;
 }

@@ -9,6 +9,7 @@ import {Article} from '../../types';
 import {ArticleService} from '../../services/article.service';
 import {animate, style, transition, trigger} from "@angular/animations";
 import {EditorjsComponent} from "../../../../shared/components/editorjs/editorjs.component";
+import {ImageProcessorService} from "../../../../core/services/image-processor/image-processor.service";
 
 const PAGE_TITLE = 'Shelf | Editor';
 
@@ -57,7 +58,7 @@ export default class EditorComponent implements OnInit, OnDestroy {
   editorReady = false;
   editorChanged = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private articleService: ArticleService, private notificationService: NotificationService, private titleService: Title, private location: Location, private router: Router) {
+  constructor(private imageService: ImageProcessorService, private activatedRoute: ActivatedRoute, private articleService: ArticleService, private notificationService: NotificationService, private titleService: Title, private location: Location, private router: Router) {
     titleService.setTitle(PAGE_TITLE);
   }
 
@@ -93,27 +94,71 @@ export default class EditorComponent implements OnInit, OnDestroy {
     this.tagsModal.show();
   }
 
+  async anotherSaveArticle() {
+    if (!this.article) {
+      if (this.editorChanged || this.articleTitle.value.trim() || this.articleHeroImage) {
+        const newArticle: any = {}
+        if (this.editorChanged) {
+          let editorContent = await this.editorJsComponent.editor.save();
+          if (editorContent.blocks.length) newArticle.content = editorContent.blocks;
+        }
+        if (this.articleHeroImage){
+          newArticle.heroImage = this.articleHeroImage;
+          newArticle.thumbnail = await this.imageService.generateThumbnail(this.articleHeroImage);
+        }
+        newArticle.created = new Date();
+        newArticle.updated = new Date();
+        newArticle.title = this.articleTitle.value.trim();
+        const newId = await this.articleService.saveArticle(newArticle);
+        this.article = newArticle;
+        this.editorChanged = false;
+        await this.router.navigate(['/editor', newId]);
+      }
+    }
+    else {
+      if(this.editorChanged || this.articleTitle.value.trim() !== this.article.title || this.article.heroImage?.name !== this.articleHeroImage?.name){
+        const newArticle = {...this.article};
+        if(this.editorChanged){
+          let editorContent = await this.editorJsComponent.editor.save();
+          if(editorContent.blocks.length){
+            newArticle.content = editorContent.blocks;
+          }
+        }
+        if(this.article.heroImage?.name !== this.articleHeroImage?.name && this.articleHeroImage){
+          newArticle.heroImage = this.articleHeroImage;
+          newArticle.thumbnail = await this.imageService.generateThumbnail(this.articleHeroImage);
+        }
+        else {
+          newArticle.heroImage = this.articleHeroImage;
+        }
+        newArticle.title = this.articleTitle.value.trim();
+        newArticle.updated = new Date();
+        this.article = newArticle;
+        this.editorChanged = false;
+        await this.articleService.saveArticle(newArticle)
+      }
+    }
+  }
+
   saveArticle() {
     if (!this.article) {
       if (this.editorChanged || this.articleHeroImage || this.articleTitle.value.trim()) {
         if (this.editorChanged) {
           this.editorJsComponent.editor.save().then((data) => {
-            if (data.blocks.length || this.articleHeroImage || this.articleTitle.value.trim()){
+            if (data.blocks.length || this.articleHeroImage || this.articleTitle.value.trim()) {
               return this.articleService.saveArticle({
                 title: this.articleTitle.value.trim(),
                 content: data.blocks,
                 created: new Date(data.time!),
                 updated: new Date(data.time!)
-              }).then((savedId)=>{
+              }).then((savedId) => {
                 return savedId ? this.router.navigate(['/editor', savedId]) : undefined
               }).then()
-            }
-            else {
+            } else {
               return;
             }
           })
-        }
-        else {
+        } else {
           this.articleService.saveArticle({
             title: this.articleTitle.value.trim(),
             heroImage: this.articleHeroImage ? this.articleHeroImage : undefined,
@@ -122,23 +167,22 @@ export default class EditorComponent implements OnInit, OnDestroy {
           })
         }
       }
-    }
-    else {
+    } else {
       if (this.editorChanged || this.articleTitle.value.trim() !== this.article.title || this.articleHeroImage?.name !== this.article.heroImage?.name) {
-        if(this.editorChanged){
+        if (this.editorChanged) {
           this.editorJsComponent.editor.save().then(data => {
             return this.articleService.saveArticle({
               ...this.article,
               updated: new Date(),
               title: this.articleTitle.value.trim(),
               heroImage: this.articleHeroImage,
-              content:data.blocks
+              content: data.blocks
             })
           })
-        }
-        else {
+        } else {
           this.articleService.saveArticle({
             ...this.article,
+            updated: new Date(),
             title: this.articleTitle.value.trim(),
             heroImage: this.articleHeroImage
           })
@@ -180,13 +224,51 @@ export default class EditorComponent implements OnInit, OnDestroy {
   }
 
   autoSave() {
-    if (this.article) {
-      if (this.editorChanged) {
-
+    if (!this.article) {
+      if (this.editorChanged || this.articleTitle.value.trim() || this.articleHeroImage) {
+        if (this.editorChanged) {
+          this.editorJsComponent.editor.save().then(data => {
+            if (data.blocks.length || this.articleTitle.value.trim() || this.articleHeroImage) {
+              this.articleService.saveArticle({
+                title: this.articleTitle.value.trim(),
+                created: new Date(),
+                updated: new Date(),
+                heroImage: this.articleHeroImage,
+                content: data.blocks
+              })
+            }
+          })
+        } else {
+          this.articleService.saveArticle({
+            title: this.articleTitle.value.trim(),
+            heroImage: this.articleHeroImage,
+            created: new Date(),
+            updated: new Date()
+          })
+        }
       }
     } else {
-      if (this.editorChanged || this.articleHeroImage || this.articleTitle.value) {
-
+      if (this.editorChanged || this.articleHeroImage?.name !== this.article.heroImage?.name || this.articleTitle.value.trim() !== this.article.title) {
+        if (this.editorChanged) {
+          this.editorJsComponent.editor.save().then(data => {
+            if (data.blocks.length || this.articleHeroImage?.name !== this.article.heroImage?.name || this.articleTitle.value.trim() !== this.article.title) {
+              this.articleService.saveArticle({
+                ...this.article,
+                title: this.articleTitle.value.trim(),
+                updated: new Date(),
+                heroImage: this.articleHeroImage,
+                content: data.blocks
+              })
+            }
+          })
+        } else {
+          this.articleService.saveArticle({
+            ...this.article,
+            title: this.articleTitle.value.trim(),
+            updated: new Date(),
+            heroImage: this.articleHeroImage
+          })
+        }
       }
     }
     // Called any time user navigates from the editor

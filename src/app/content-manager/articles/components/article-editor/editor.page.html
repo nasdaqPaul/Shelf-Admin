@@ -1,11 +1,11 @@
 <main (keydown.control.s)="$event.preventDefault(); saveArticle()" class="">
-  <section class="container pt-3">
+  <section class="container">
     <div class="card">
       <div class="card-header">
         <h5 class="card-title d-inline">Article Editor</h5>
         <div class="btn-group btn-group-sm float-end" role="group" aria-label="Save">
-          <div class="btn-group">
-            <button class="btn btn-secondary btn-sm" type="button" (click)="saveArticle()">Save <i
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-secondary btn-sm" type="button" (click)="anotherSaveArticle()">Save <i
               class="bi bi-cloud-upload ms-1"></i></button>
             <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -19,21 +19,21 @@
           </div>
         </div>
       </div>
-      <div class="card-body p-2">
+      <div class="card-body p-0">
         <div class="d-flex justify-content-center h-100 align-items-center" *ngIf="!editorReady">
           <div class="spinner-border align-middle" role="status" style="width: 5rem; height: 5rem;">
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-        <div id="article-header" [hidden]="!editorReady">
+        <div id="article-header" [hidden]="!editorReady" class="shadow p-2 my-2 rounded-bottom border-1">
           <div class="input-group input-group-sm mb-2" id="article-title">
             <input type="text" class="form-control" placeholder="Article Title" aria-label="Article Title" [formControl]="articleTitle">
             <button class="btn btn-outline-primary text-muted" type="button" (click)="articleTags()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Article Tags"><i class="bi bi-tag"></i></button>
             <button class="btn btn-outline-primary text-muted" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hero Image" (click)="heroImageSelect.click()"><i class="bi bi-image"></i></button>
           </div>
           <input type="file" accept="image/*" hidden #heroImageSelect (change)="uploadHeroImage($event)">
+          <div hero-image id="hero-image" *ngIf="articleHeroImage && editorReady" [imageFile]="articleHeroImage" (removeCoverImage)="articleHeroImage=undefined" @growShrink></div>
         </div>
-        <div hero-image id="hero-image" *ngIf="articleHeroImage && editorReady" [imageFile]="articleHeroImage" (removeCoverImage)="articleHeroImage=undefined" @growShrink class="d-flex flex-column"></div>
         <div id="article-body">
           <app-editorjs (loaded)="editorReady = true" (changed)="editorChanged = true" [placeholder]="'Click to start typing'" [blocks]="article?.content"></app-editorjs>
         </div>

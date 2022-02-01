@@ -1,0 +1,79 @@
+//@import "../../node_modules/bootstrap/scss/functions";
+//@font-face {
+//  font-family: 'verela-round';
+//  src: url(../assets/fonts/verela-round.ttf) format("truetype");
+//}
+//@font-face {
+//  font-family: 'work-sans';
+//  src: url(../assets/fonts/work-sans/work-sans-variable-fontweight.ttf) format("truetype");
+//}
+
+
+//ENA African Rich
+$ena-purple: #73335B;
+$ena-purple-dark-1: #682e52;
+$ena-purple-dark-2: #5c2949;
+$ena-purple-dark-3: #512440;
+$ena-purple-dark-4: #451f37;
+$ena-purple-dark-5: #3a1a2e;
+$ena-purple-dark-6: #2e1424;
+$ena-purple-dark-7: #220f1b;
+$ena-purple-dark-8: #170a12;
+$ena-purple-dark-9: #0b0509;
+
+$ena-purple-light-1: #81476b;
+$ena-purple-light-2: #8f5c7c;
+$ena-purple-light-3: #9d708c;
+$ena-purple-light-4: #ab859d;
+$ena-purple-light-5: #b999ad;
+$ena-purple-light-6: #c7adbd;
+$ena-purple-light-7: #d5c2ce;
+$ena-purple-light-8: #e3d6de;
+$ena-purple-light-9: #f1ebef;
+
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: $ena-purple-dark-7 !default;
+$black:    #000 !default;
+
+$ena-brown: #90363E;
+$ena-red: #CC423A;
+$ena-orange: #FF8733;
+$ena-yellow: #FFC345;
+
+$primary:       $ena-purple !default;
+$secondary:     $ena-yellow !default;
+$danger:        $ena-red !default;
+$light:         $ena-purple-light-7 !default;
+$dark:          $ena-purple-dark-2 !default;
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+) !default;
+
+
+// Body overrides
+$body-bg:                   $white !default;
+$body-color:                $gray-900 !default;
+$text-muted: $ena-purple-light-4;
+//$font-family-base: verela-round;
+$border-color: $ena-purple-light-5;
+$body-bg: $ena-purple-light-9;
+$card-border-color: $ena-purple-light-5;
+$dropdown-dark-bg: $ena-purple-dark-1;
+$input-border-color: $ena-purple-light-5;
+$tooltip-bg: $dark;
+$body-color: $ena-purple-dark-6;
+
+@import "node_modules/bootstrap";

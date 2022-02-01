@@ -12,3 +12,9 @@ abbr[title] {
   cursor: inherit !important;
   text-decoration: none !important;
 }
+
+.article-thumbnail img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}

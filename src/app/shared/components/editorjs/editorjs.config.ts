@@ -5,12 +5,16 @@ import List from '@editorjs/list';
 import Embed from '@editorjs/embed';
 // @ts-ignore
 import Marker from '@editorjs/marker';
+import ImageTool from "./block-tools/image-tool";
 
 export const editorjsConfig = {
   logLevel: 'ERROR',
   placeholder: 'Click to start typing',
   holder: 'editorjs',
   tools: {
+    image: {
+      class: ImageTool
+    },
     Marker: {
       class: Marker,
       shortcut: 'CMD+SHIFT+M',

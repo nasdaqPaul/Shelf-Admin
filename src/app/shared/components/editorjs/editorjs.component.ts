@@ -5,7 +5,7 @@ import {editorjsConfig} from "./editorjs.config";
 @Component({
   selector: 'app-editorjs',
   templateUrl: './editorjs.component.html',
-  styleUrls: ['./editorjs.component.css']
+  styleUrls: ['./editorjs.component.css'],
 })
 export class EditorjsComponent implements OnInit {
   @Input('blocks') blocks: any;
