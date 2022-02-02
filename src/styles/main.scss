@@ -1,6 +1,8 @@
-
 @import "variables";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+//TODO: Probably move this to Editor Module
+@import "~highlight.js/scss/default";
+@import "src/app/shared/components/editorjs/styles";
 
 app-root > .app-page, login, dashboard {
   flex: 1 1 auto;

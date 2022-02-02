@@ -5,7 +5,8 @@ import List from '@editorjs/list';
 import Embed from '@editorjs/embed';
 // @ts-ignore
 import Marker from '@editorjs/marker';
-import ImageTool from "./block-tools/image-tool";
+import ImageTool from "./block-tools/image-tool/image-tool";
+import CodeTool from "./block-tools/code-tool/code-tool";
 
 export const editorjsConfig = {
   logLevel: 'ERROR',
@@ -14,6 +15,9 @@ export const editorjsConfig = {
   tools: {
     image: {
       class: ImageTool
+    },
+    code: {
+      class: CodeTool
     },
     Marker: {
       class: Marker,
