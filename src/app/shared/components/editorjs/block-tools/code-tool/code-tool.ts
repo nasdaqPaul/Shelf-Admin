@@ -37,6 +37,8 @@ export default class CodeTool implements BlockTool {
     }
   }
   private highlightCode(){
+    //TODO: Find a more non-repeating way of modifying this class-list
+    this.highlightResult!.className = 'border border-secondary w-100 rounded p-1 h-100 hljs language-' + this.language?.value
     this.highlightResult!.innerHTML = syntaxHighlighter.highlight(this.codeTextArea!.value, {language: this.language!.value}).value;
   }
   private buildCodeTextArea(): HTMLElement{
@@ -45,7 +47,7 @@ export default class CodeTool implements BlockTool {
     containerElem.classList.add('col');
     this.codeTextArea.addEventListener("keydown", this.handleTextAreaKeyDown);
     this.codeTextArea.addEventListener('blur', e => {
-      this.highlightCode()
+      this.highlightCode();
     })
     this.codeTextArea.classList.add( 'form-control','w-100');
     // this.codeTextArea.rows = 10;
@@ -79,7 +81,6 @@ export default class CodeTool implements BlockTool {
     this.highlightResult = document.createElement('pre');
     containerElem.classList.add('col')
     this.highlightResult.classList.add('border', 'border-secondary', 'w-100', 'rounded', 'p-1', 'h-100');
-    this.highlightResult.innerText = 'Somebody';
     if(this.savedData?.language){
       this.highlightCode();
     }

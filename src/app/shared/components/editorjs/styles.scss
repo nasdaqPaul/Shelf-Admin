@@ -1,7 +1,23 @@
 .code-tool header select {
   width: fit-content;
 }
-.code-tool header, .code-tool textarea {
+.code-tool header, .code-tool textarea, .image-tool {
   font-family: var(--bs-font-sans-serif);
 
+}
+
+.image-tool {
+  position: relative;
+}
+.image-tool img {
+  max-height: 400px;
+  width: 100%;
+  object-fit: contain;
+}
+.image-tool header {
+  position: absolute;
+}
+
+.ce-toolbox__button svg {
+  color: $dark;
 }

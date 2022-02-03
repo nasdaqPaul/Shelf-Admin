@@ -9,7 +9,6 @@ import ImageTool from "./block-tools/image-tool/image-tool";
 import CodeTool from "./block-tools/code-tool/code-tool";
 
 export const editorjsConfig = {
-  logLevel: 'ERROR',
   placeholder: 'Click to start typing',
   holder: 'editorjs',
   tools: {

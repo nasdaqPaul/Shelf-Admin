@@ -1,7 +1,7 @@
 @import "variables";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 //TODO: Probably move this to Editor Module
-@import "~highlight.js/scss/default";
+@import "~highlight.js/scss/dark";
 @import "src/app/shared/components/editorjs/styles";
 
 app-root > .app-page, login, dashboard {
@@ -10,22 +10,6 @@ app-root > .app-page, login, dashboard {
 
 login {
   display: flex;
-}
-
-.editor-image-elem img {
-  max-height: 400px;
-  width: 100%;
-  object-fit: contain;
-}
-.editor-image-elem .image-caption{
-  font-style: italic;
-  margin: 0;
-  padding: 0.4em 0;
-}
-
-.ce-toolbox__button svg {
-  color: $ena-orange;
-
 }
 //class="ce-toolbox__button ce-toolbox__button--active"
 //class="ce-toolbox__button ce-toolbox__button--active"

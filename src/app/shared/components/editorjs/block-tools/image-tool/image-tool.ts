@@ -1,5 +1,4 @@
 import {API, BlockTool} from "@editorjs/editorjs";
-import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
 
 const imageIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
             <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
@@ -8,15 +7,15 @@ const imageIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16
 
 export default class ImageTool implements BlockTool{
   private api: API
+  private imageElement?: HTMLImageElement;
   private imageFile: File;
-  private wrapperDiv?: HTMLElement;
-  private imageCaption?: string;
+  private captionInputElement?: HTMLInputElement;
+  private savedCaption: string;
 
   constructor({api, data}:any) {
     this.api = api;
     this.imageFile = data.imageFile;
-    this.imageCaption = data.caption;
-    this.wrapperDiv = undefined;
+    this.savedCaption = data.caption;
   }
   static get toolbox(){
     return {
@@ -24,42 +23,59 @@ export default class ImageTool implements BlockTool{
       icon: imageIcon
     }
   }
-  handleFileInput = (event: Event) =>{
-    // @ts-ignore
-    this.imageFile = event.target.files[0];
-    // @ts-ignore
-    this.wrapperDiv.children[1].src = URL.createObjectURL(this.imageFile);
+  private handleFileInput = (event: Event) =>{
+    //@ts-ignore
+    this.imageFile = event.target!.files![0]
+    this.imageElement!.src = URL.createObjectURL(this.imageFile);
+  }
+  private buildToolHeader() {
+    const headerElem = document.createElement('header');
+    headerElem.classList.add('rounded', 'bg-dark', 'shadow-lg', 'm-2', 'px-3');
+    headerElem.innerHTML = '<h6 class="text-muted my-auto py-1">filename (file-size)</h6>'
+
+    const fileInputElement = document.createElement('input');
+    fileInputElement.type = 'file';
+    fileInputElement.accept = 'image/*';
+    fileInputElement.hidden = true;
+    fileInputElement.onchange = this.handleFileInput;
+    if (!this.imageFile) fileInputElement!.click();
+
+    headerElem.appendChild(fileInputElement);
+    return headerElem;
+  }
+  private buildImageElement() {
+    this.imageElement = document.createElement('img');
+    this.imageElement.src = this.imageFile? URL.createObjectURL(this.imageFile) : "";
+    this.imageElement.classList.add('rounded', 'img-thumbnail');
+    return this.imageElement
+  }
+  private buildFooter() {
+    const footer = document.createElement('footer');
+    footer.classList.add('d-inline-flex', 'w-100')
+    this.captionInputElement = document.createElement('input');
+    this.captionInputElement.type = 'text';
+    this.captionInputElement.classList.add('form-control','form-control-sm', 'mt-1');
+    this.captionInputElement.placeholder = 'Add a caption'
+    if (this.savedCaption) this.captionInputElement.value = this.savedCaption;
+    footer.appendChild(this.captionInputElement);
+    return footer
   }
   render() {
-    this.wrapperDiv = document.createElement('div');
-    const fileInput = document.createElement('input');
-    const imgElement = document.createElement('img');
-    const captionElem = document.createElement('p');
+    const wrapperDiv = document.createElement('article');
+    wrapperDiv.classList.add('image-tool', 'mt-2', 'mb-4')
 
-    imgElement.src = this.imageFile? URL.createObjectURL(this.imageFile) : "";
-    imgElement.classList.add('border', 'border-primary', 'border-1', 'rounded', 'my-1',)
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.hidden = true;
-    fileInput.onchange = this.handleFileInput;
+    wrapperDiv.appendChild(this.buildToolHeader());
+    wrapperDiv.appendChild(this.buildImageElement());
+    wrapperDiv.appendChild(this.buildFooter());
 
-    captionElem.contentEditable = 'true';
-    captionElem.innerText = this.imageCaption || "Add image caption"
-    captionElem.classList.add('text-muted', 'ps-5', 'image-caption', 'ce-paragraph')
-
-    this.wrapperDiv.appendChild(fileInput);
-    this.wrapperDiv.appendChild(imgElement);
-    this.wrapperDiv.appendChild(captionElem);
-    this.wrapperDiv.classList.add('editor-image-elem')
-
-    if (!this.imageFile) fileInput.click();
-    return this.wrapperDiv;
+    return wrapperDiv;
   }
 
   save() {
+    console.log('caption', this.captionInputElement?.value)
     return {
       imageFile: this.imageFile,
-      caption: this.imageCaption
+      caption: this.captionInputElement?.value
     }
   }
 }
