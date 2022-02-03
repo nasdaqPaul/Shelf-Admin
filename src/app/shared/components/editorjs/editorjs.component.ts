@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import EditorJS, {API, BlockAPI} from "@editorjs/editorjs";
 import {editorjsConfig} from "./editorjs.config";
 
@@ -6,7 +6,7 @@ import {editorjsConfig} from "./editorjs.config";
   selector: 'app-editorjs',
   template: '<div id="editorjs"></div>',
 })
-export class EditorjsComponent implements OnInit {
+export class EditorjsComponent implements OnInit, OnDestroy {
   @Input('blocks') blocks: any;
   @Input('placeholder') placeholder?: string
   @Output('loaded') loaded = new EventEmitter<boolean>();
@@ -29,6 +29,11 @@ export class EditorjsComponent implements OnInit {
         this.changed.emit(true);
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
+    console.log('Editor Component destroyed')
   }
 
 }

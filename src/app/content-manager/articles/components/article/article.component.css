@@ -4,8 +4,11 @@
 .upload-local-article-icon, .delete-local-article-icon {
   font-size: 1.2rem;
 }
+.delete-local-article-icon {
+  transition: color 0.25s;
+}
 .delete-local-article-icon:hover {
-  color: #dc3545 !important;
+  color: var(--bs-red) !important;
 }
 abbr[title] {
   border-bottom: none !important;
@@ -17,4 +20,7 @@ abbr[title] {
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+.article-thumbnail {
+  height: 100px;
 }
