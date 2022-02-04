@@ -55,5 +55,8 @@ export const ROUTES: Routes = [
         path: 'config', component: ConfigPageComponent
       }
     ],
+    data: {
+      module: 'SiteManager'
+    }
   },
 ];

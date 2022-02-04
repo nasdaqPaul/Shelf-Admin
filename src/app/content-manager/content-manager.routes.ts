@@ -52,5 +52,8 @@ export const ROUTES: Routes = [
         ],
       },
     ],
+    data: {
+      module: 'ContentManager'
+    }
   },
 ];

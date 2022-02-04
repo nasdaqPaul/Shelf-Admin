@@ -8,7 +8,7 @@ import {ImageProcessorService} from "../../../../core/services/image-processor/i
 @Component({
   selector: 'article',
   template: `
-    <div class="card">
+
       <div class="card-header py-1 px-2 bg-dark rounded m-1 shadow-sm d-inline-flex">
         <abbr [title]="article.title" class="text-truncate text-muted my-auto w-75">
           <h6 *ngIf="article.title; else untitled" class="card-title text-truncate my-auto" [routerLink]="['/editor', article.id]">{{article.title | titlecase}}</h6>
@@ -20,6 +20,7 @@ import {ImageProcessorService} from "../../../../core/services/image-processor/i
       <div class="row g-0 gx-3 p-1">
         <div class="col-4 article-thumbnail ">
             <img  [src]="thumbnailSrc" alt="" class="img-thumbnail">
+<!--          <img src="assets/images/default-article-image.png" alt="" class="img-thumbnail">-->
         </div>
         <div class="col-8">
           <div class="card-body p-0">
@@ -27,7 +28,6 @@ import {ImageProcessorService} from "../../../../core/services/image-processor/i
           </div>
         </div>
       </div>
-    </div>
   `,
   styleUrls: ['article.component.css'],
   animations: [
@@ -53,6 +53,9 @@ export default class ArticleComponent implements OnChanges{
       this.imageProcessor.generateImageULR(this.article.thumbnail).then(src => {
         this.thumbnailSrc = src
       })
+    }
+    else {
+      this.thumbnailSrc = 'assets/images/default-article-image.png'
     }
   }
 

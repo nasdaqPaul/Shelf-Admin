@@ -2,14 +2,15 @@
   <ng-container title>Articles</ng-container>
 </list-navigator>
 <main class="flex-grow-1">
-  <div class="row g-1 pt-2">
-    <div class="col-12 col-md-4 flex-grow-0" *ngFor="let article of page">
-      <article [article]="article" (deleteArticle)="requestDeleteArticle($event)"
+  <div class="row g-1 pt-2" *ngIf="localArticles.length">
+    <div class="col-12 col-md-4 " *ngFor="let article of page">
+      <article [article]="article" (deleteArticle)="requestDeleteArticle($event)" class="card"
                (uploadArticle)="uploader.upload($event)"></article>
     </div>
-  </div>
+  </div >
   <div *ngIf="!localArticles.length">
-    <h1>Nothing to see here</h1>
+    <h1 class="text-muted display-1">No Articles to show</h1>
+    <p class="lead">You have not created any articles so far .<br> Click on <code>New Article</code> above to get started!</p>
   </div>
   <upload-article #uploader class="col-12"></upload-article>
 </main>
