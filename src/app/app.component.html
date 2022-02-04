@@ -1,7 +1,7 @@
 <header>
   <app-navbar></app-navbar>
 </header>
-<div class="app-page" [@routeAnimations]="path">
+<div class="d-flex flex-column" [@routeAnimations]="path" id="router-animation-wrapper">
   <router-outlet #outlet='outlet'></router-outlet>
 </div>
 <app-footer></app-footer>

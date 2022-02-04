@@ -57,7 +57,7 @@ function sortArticlesByTitle(articles: Article[], ascending: boolean) {
 export default class ArticleListComponent implements OnInit, OnDestroy {
   private localArticlesSubscription!: Subscription;
   private confirmDeleteDialog!: Modal;
-  readonly articlesPerPage = 6;
+  readonly articlesPerPage = 9;
 
   localArticles: Article[] = [];
   numberOfPages!: number;

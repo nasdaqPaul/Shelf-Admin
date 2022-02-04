@@ -1,35 +1,41 @@
-<section>
-  <list-navigator [sortList]="sortList" (sorted)="sort($event)">
-    <ng-container title>Articles</ng-container>
-  </list-navigator>
-  <main class="row g-3 pt-2">
-    <div class="col-12 col-md-4 art" *ngFor="let article of page">
-      <article [article]="article" (deleteArticle)="requestDeleteArticle($event)" (uploadArticle)="uploader.upload($event)"></article>
+<list-navigator [sortList]="sortList" (sorted)="sort($event)">
+  <ng-container title>Articles</ng-container>
+</list-navigator>
+<main class="flex-grow-1">
+  <div class="row g-1 pt-2">
+    <div class="col-12 col-md-4 flex-grow-0" *ngFor="let article of page">
+      <article [article]="article" (deleteArticle)="requestDeleteArticle($event)"
+               (uploadArticle)="uploader.upload($event)"></article>
     </div>
-    <div *ngIf="!localArticles.length">
-      <h1>Nothing to see here</h1>
-    </div>
-    <upload-article #uploader></upload-article>
-  </main>
-  <footer class="mt-3">
-    <div class="modal fade" id="confirm-delete-local-article" tabindex="-1" aria-labelledby="confirm-delete-local-article" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header py-1 text-danger">
-            <h5 class="modal-title">Confirm Article deletion</h5>
-            <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body text-center text-muted">
-            <h4 class="text-truncate">{{articleToDelete?.title | titlecase}}</h4>
-            <small>This action is not reversible</small>
-          </div>
-          <div class="modal-footer py-1">
-            <button type="button" class="btn btn-outline-secondary btn-sm me-auto" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal" (click)="confirmDeleteArticle()">Delete</button>
-          </div>
+  </div>
+  <div *ngIf="!localArticles.length">
+    <h1>Nothing to see here</h1>
+  </div>
+  <upload-article #uploader class="col-12"></upload-article>
+</main>
+<footer class="mt-3">
+  <div class="modal fade" id="confirm-delete-local-article" tabindex="-1" aria-labelledby="confirm-delete-local-article"
+       aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header py-1 text-danger">
+          <h5 class="modal-title">Confirm Article deletion</h5>
+          <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center text-muted">
+          <h4 class="text-truncate">{{articleToDelete?.title | titlecase}}</h4>
+          <small>This action is not reversible</small>
+        </div>
+        <div class="modal-footer py-1">
+          <button type="button" class="btn btn-outline-secondary btn-sm me-auto" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal"
+                  (click)="confirmDeleteArticle()">Delete
+          </button>
         </div>
       </div>
     </div>
-    <list-paginator *ngIf="localArticles.length > articlesPerPage" [numberOfPages]="numberOfPages" (page)="updatePage($event)" @fadeInOut></list-paginator>
-  </footer>
-</section>
+  </div>
+  <list-paginator *ngIf="localArticles.length > articlesPerPage" [numberOfPages]="numberOfPages"
+                  (page)="updatePage($event)" @fadeInOut></list-paginator>
+</footer>
+

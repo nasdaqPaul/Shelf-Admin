@@ -13,6 +13,7 @@ export default class ImageTool implements BlockTool{
   private savedCaption: string;
 
   constructor({api, data}:any) {
+    console.log('Image tool creation')
     this.api = api;
     this.imageFile = data.imageFile;
     this.savedCaption = data.caption;

@@ -4,12 +4,17 @@
 @import "~highlight.js/scss/dark";
 @import "src/app/shared/components/editorjs/styles";
 
-app-root > .app-page, login, dashboard {
+app-root #router-animation-wrapper {
   flex: 1 1 auto;
 }
-
-login {
+content-manager, content-manager > main, content-manager > main > ng-component {
+  flex-grow: 1;
   display: flex;
+  flex-direction: column;
+}
+//TODO Add site-manager, site-manager > main, site-manager > main > ng-component above
+.app-page {
+  flex-grow: 1;
 }
 //class="ce-toolbox__button ce-toolbox__button--active"
 //class="ce-toolbox__button ce-toolbox__button--active"

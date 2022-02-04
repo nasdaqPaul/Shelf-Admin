@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+  selector: 'content-manager',
   template: `
     <main>
       <header class="bg-light">

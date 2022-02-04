@@ -1,17 +1,15 @@
-<section>
-  <list-navigator>
-    <ng-container title>Series</ng-container>
-  </list-navigator>
-  <main class="row gy-2 mt-1">
-    <div *ngIf="!series.length; else seriesListBody">
-      <h1>Nothing to see here</h1>
+<list-navigator>
+  <ng-container title>Series</ng-container>
+</list-navigator>
+<main class="row gy-2 mt-1">
+  <div *ngIf="!series.length; else seriesListBody">
+    <h1>Nothing to see here</h1>
+  </div>
+  <ng-template #seriesListBody>
+    <div class="col-12" *ngFor="let s of series">
+      <local-series [series]="s" (deleteSeries)="deleteSeries($event)"></local-series>
     </div>
-    <ng-template #seriesListBody>
-      <div class="col-12" *ngFor="let s of series">
-        <local-series [series]="s" (deleteSeries)="deleteSeries($event)"></local-series>
-      </div>
-    </ng-template>
-  </main>
-  <footer>
-  </footer>
-</section>
+  </ng-template>
+</main>
+<footer>
+</footer>
